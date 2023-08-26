@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import DashboardService from './service/DashboardService';
 
 function App() {
+  DashboardService.getAllDashboard().then(result => console.log(result.data));
   return (
     <div className="App">
       <header className="App-header">
