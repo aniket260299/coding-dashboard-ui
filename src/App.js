@@ -1,25 +1,22 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import DashboardService from './service/DashboardService';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Route, Routes } from 'react-router-dom'
+import Header from './components/Header';
+import ListDashboard from './components/ListDashboard';
 
 function App() {
-  DashboardService.getAllDashboard().then(result => console.log(result.data));
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      <div className="container mt-3">
+        <Routes>
+          <Route path="/" element={<ListDashboard />} />
+          <Route path="/dashboards" element={<ListDashboard />} />
+          {/* <Route path="/add" element={<AddTutorial />} />
+        <Route path="/tutorials/:id" element={<Tutorial />} /> */}
+        </Routes>
+      </div>
     </div>
   );
 }
