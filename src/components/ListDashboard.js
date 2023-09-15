@@ -17,6 +17,13 @@ function ListDashboard() {
             })
     }, []);
 
+    const remove = async (id) => {
+        await DashboardService.deleteDashboard(id).then(() => {
+            let updatedDashboard = [...dashboards].filter(i => i.id !== id);
+            setdashboards(updatedDashboard);
+        });
+    }
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -24,7 +31,7 @@ function ListDashboard() {
     return (
         <div>
             <div className="float-end">
-                <Button color="success" tag={Link} to="/add">Add Record</Button>
+                <Button color="success" tag={Link} to="/dashboard/edit" state={{ data: null }}>Add Record</Button>
             </div>
             <h2 className="text">Dashboard List</h2>
             <br></br>
@@ -51,8 +58,8 @@ function ListDashboard() {
                                         <td> {dashboard.date_updated}</td>
                                         <td>
                                             <button onClick={() => this.viewDashboard(dashboard.id)} className="btn btn-info">View </button>
-                                            <button style={{ marginLeft: "10px" }} onClick={() => this.editDashboard(dashboard.id)} className="btn btn-primary">Update </button>
-                                            <button style={{ marginLeft: "10px" }} onClick={() => this.deleteDashboard(dashboard.id)} className="btn btn-danger">Delete </button>
+                                            <Button color="primary" tag={Link} to="/dashboard/edit/" state={{ data: dashboard }} style={{ marginLeft: "10px" }} >Update </Button>
+                                            <Button color="danger" style={{ marginLeft: "10px" }} onClick={() => remove(dashboard.id)} className="btn btn-danger">Delete </Button>
                                         </td>
                                     </tr>
                             )
@@ -62,7 +69,7 @@ function ListDashboard() {
 
             </div>
 
-        </div>
+        </div >
     )
 }
 

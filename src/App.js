@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from 'react-router-dom'
 import Header from './components/Header';
 import ListDashboard from './components/ListDashboard';
+import EditDashboard from './components/EditDashboard';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ListDashboard />} />
           <Route path="/dashboards" element={<ListDashboard />} />
+          <Route path="/dashboard/edit" element={<EditDashboard />} />
           {/* <Route path="/add" element={<AddTutorial />} />
         <Route path="/tutorials/:id" element={<Tutorial />} /> */}
         </Routes>

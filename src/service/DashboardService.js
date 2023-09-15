@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const CODING_DASHBOARD_URL = "https://coding-dashboard-8nfy.onrender.com/api/coding-dashboard";
+const CODING_DASHBOARD_URL = "http://localhost:8080/api/coding-dashboard";
 
 class DashboardService {
 
