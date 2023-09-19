@@ -35,9 +35,11 @@ const EditDashboard = () => {
         let currentTime = new Date().getTime();
         dashboard.date_updated = currentTime;
         dashboard.id ? dashboard.date_updated = currentTime : dashboard.date_created = currentTime;
-        dashboard.id ? DashboardService.updateDashboard(dashboard) : DashboardService.addDashboard(dashboard);
-        setDashboard(initialFormState);
-        navigate("/dashboards/");
+        const response = dashboard.id ? DashboardService.updateDashboard(dashboard) : DashboardService.addDashboard(dashboard);
+        response.then(result => {
+            setDashboard(initialFormState);
+            navigate('/dashboards/', { state: { data: result.data } });
+        });
     }
 
     const title = <h2>{dashboard.id ? 'Edit Dashboard' : 'Add Dashboard'}</h2>;
