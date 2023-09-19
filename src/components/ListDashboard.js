@@ -28,6 +28,15 @@ function ListDashboard() {
         return <p>Loading...</p>;
     }
 
+    const dateFormat = {
+        weekday: 'short', // 'short', 'long', or 'narrow'
+        year: 'numeric', // 'numeric', '2-digit'
+        month: 'short', // 'short', 'long', 'narrow', or '2-digit'
+        day: '2-digit', // 'numeric', '2-digit'
+        hour: '2-digit', // 'numeric', '2-digit'
+        minute: '2-digit', // 'numeric', '2-digit'
+    };
+
     return (
         <div>
             <div className="float-end">
@@ -55,7 +64,7 @@ function ListDashboard() {
                                         <td> {dashboard.title} </td>
                                         <td> {dashboard.tags}</td>
                                         <td> {dashboard.difficulty}</td>
-                                        <td> {dashboard.date_updated}</td>
+                                        <td> {new Date(dashboard.date_updated).toLocaleString('en-US', dateFormat)}</td>
                                         <td>
                                             <button onClick={() => this.viewDashboard(dashboard.id)} className="btn btn-info">View </button>
                                             <Button color="primary" tag={Link} to="/dashboard/edit/" state={{ data: dashboard }} style={{ marginLeft: "10px" }} >Update </Button>
