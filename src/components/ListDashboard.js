@@ -66,7 +66,7 @@ function ListDashboard() {
                                         <td> {dashboard.difficulty}</td>
                                         <td> {new Date(dashboard.date_updated).toLocaleString('en-US', dateFormat)}</td>
                                         <td>
-                                            <button onClick={() => this.viewDashboard(dashboard.id)} className="btn btn-info">View </button>
+                                            <Button color="info" tag={Link} to="/dashboard/view/" state={{ data: dashboard }} >View </Button>
                                             <Button color="primary" tag={Link} to="/dashboard/edit/" state={{ data: dashboard }} style={{ marginLeft: "10px" }} >Update </Button>
                                             <Button color="danger" style={{ marginLeft: "10px" }} onClick={() => remove(dashboard.id)} className="btn btn-danger">Delete </Button>
                                         </td>

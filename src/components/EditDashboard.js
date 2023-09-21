@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import DashboardService from '../service/DashboardService';
+import AceEditor from 'react-ace';
+import 'ace-builds/src-noconflict/mode-java';
+import 'ace-builds/src-noconflict/theme-monokai';
 
 const EditDashboard = () => {
     const initialFormState = {
@@ -55,8 +58,18 @@ const EditDashboard = () => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="solution">Solution</Label>
-                    <Input type="text" name="solution" id="solution" value={dashboard.solution || ''}
-                        onChange={handleChange} autoComplete="solution" />
+                    <AceEditor
+                        mode="java"
+                        theme="monokai"
+                        id="solution"
+                        value={dashboard.solution || ''}
+                        onChange={data => handleChange({ target: { value: data, name: 'solution' } })}
+                        name="solution"
+                        autoComplete="solution"
+                        editorProps={{ $blockScrolling: true }}
+                        width="100%"
+                        height="400px"
+                    />
                 </FormGroup>
                 <FormGroup>
                     <Label for="hint">Hint</Label>
