@@ -8,6 +8,15 @@ import 'ace-builds/src-noconflict/theme-chrome';
 function ViewDashboard() {
     const { data } = useLocation().state;
 
+    const dateFormat = {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+
     return (
         <div>
             <div className="float-end">
@@ -15,9 +24,11 @@ function ViewDashboard() {
             </div>
             <h2 className="text">View Dashboard</h2>
             <br></br>
-            <label> Title: </label>
-            <div> {data.title}</div>
-            <label> Solution: </label>
+
+            <div><strong>Title: </strong>{data.title}</div>
+            <br></br>
+
+            <label> <strong>Solution:</strong></label>
             <div>
                 <AceEditor
                     mode="java"
@@ -28,8 +39,28 @@ function ViewDashboard() {
                     height="320px"
                 />
             </div>
-            <label> Difficulty: </label>
-            <div> {data.difficulty}</div>
+            <br></br>
+
+            <div><strong> Hint: </strong>{data.hint}</div>
+            <br></br>
+
+            <div><strong> Notes: </strong>{data.notes}</div>
+            <br></br>
+
+            <div><strong> Link: </strong>{data.link}</div>
+            <br></br>
+
+            <div><strong> Difficulty: </strong>{data.difficulty}</div>
+            <br></br>
+
+            <div><strong> Tags: </strong>{data.tags}</div>
+            <br></br>
+
+            <div><strong> Date Created: </strong>{new Date(data.date_created).toLocaleString('en-US', dateFormat)}</div>
+            <br></br>
+
+            <div><strong> Date Updated: </strong>{new Date(data.date_updated).toLocaleString('en-US', dateFormat)}</div>
+            <br></br>
         </div>
     );
 }
