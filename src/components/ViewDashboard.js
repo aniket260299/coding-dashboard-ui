@@ -34,7 +34,7 @@ function ViewDashboard() {
                     mode="java"
                     theme="chrome"
                     value={data.solution}
-                    readOnly="true"
+                    readOnly={true}
                     width="100%"
                     height="320px"
                 />
