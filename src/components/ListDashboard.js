@@ -50,7 +50,7 @@ function ListDashboard() {
                 <table className="table table-striped table-bordered">
 
                     <thead>
-                        <tr align='center'>
+                        <tr>
                             <th> Title</th>
                             <th> Tags</th>
                             <th> Difficulty</th>
@@ -62,19 +62,19 @@ function ListDashboard() {
                         {
                             dashboards.map(
                                 dashboard =>
-                                    <tr align='center' key={dashboard.id}>
-                                        <td> {dashboard.title} </td>
-                                        <td> {dashboard.tags}</td>
-                                        <td> {dashboard.difficulty}</td>
-                                        <td> {new Date(dashboard.date_updated).toLocaleString('en-US', dateFormat)}</td>
-                                        <td>
+                                    <tr key={dashboard.id}>
+                                        <td width='35%'> {dashboard.title} </td>
+                                        <td width='15%'> {dashboard.tags}</td>
+                                        <td width='5%'> {dashboard.difficulty}</td>
+                                        <td align='center' width='15%'> {new Date(dashboard.date_updated).toLocaleString('en-US', dateFormat)}</td>
+                                        <td align='center' width='15%'>
                                             <Link to="/dashboard/view/" state={{ data: dashboard }}>
                                                 <Button color="info">View </Button>
                                             </Link>
                                             <Link to="/dashboard/edit/" state={{ data: dashboard }}>
                                                 <Button color="primary" style={{ marginLeft: "10px" }}>Edit </Button>
                                             </Link>
-                                            <Button color="danger" style={{ marginLeft: "10px" }} onClick={() => remove(dashboard.id)}>Delete </Button>
+                                            <Button color="danger" style={{ marginLeft: "10px" }} onClick={() => remove(dashboard.id)}>Delete</Button>
                                         </td>
                                     </tr>
                             )
