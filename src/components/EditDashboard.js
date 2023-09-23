@@ -79,7 +79,7 @@ const EditDashboard = () => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="notes">Notes</Label>
-                    <Input type="text" name="notes" id="notes" value={dashboard.revision || ''}
+                    <Input type="text" name="notes" id="notes" value={dashboard.notes || ''}
                         onChange={handleChange} autoComplete="notes" />
                 </FormGroup>
                 <FormGroup>
