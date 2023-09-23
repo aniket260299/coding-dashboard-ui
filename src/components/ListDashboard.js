@@ -72,7 +72,7 @@ function ListDashboard() {
                                                 <Button color="info">View </Button>
                                             </Link>
                                             <Link to="/dashboard/edit/" state={{ data: dashboard }}>
-                                                <Button color="primary" style={{ marginLeft: "10px" }}>Update </Button>
+                                                <Button color="primary" style={{ marginLeft: "10px" }}>Edit </Button>
                                             </Link>
                                             <Button color="danger" style={{ marginLeft: "10px" }} onClick={() => remove(dashboard.id)}>Delete </Button>
                                         </td>

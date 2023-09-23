@@ -50,11 +50,14 @@ const EditDashboard = () => {
 
     return (<div>
         <Container>
+            <div className="float-end">
+                <Button color="secondary" tag={Link} to="/dashboards">Back</Button>
+            </div>
             {title}
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label for="title">Title</Label>
-                    <Input type="text" name="title" id="title" value={dashboard.title || ''}
+                    <Input type="textarea" name="title" id="title" value={dashboard.title || ''}
                         onChange={handleChange} autoComplete="title" />
                 </FormGroup>
                 <FormGroup>
@@ -74,17 +77,17 @@ const EditDashboard = () => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="hint">Hint</Label>
-                    <Input type="text" name="hint" id="hint" value={dashboard.hint || ''}
+                    <Input type="textarea" name="hint" id="hint" value={dashboard.hint || ''}
                         onChange={handleChange} autoComplete="hint" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="notes">Notes</Label>
-                    <Input type="text" name="notes" id="notes" value={dashboard.notes || ''}
+                    <Input type="textarea" name="notes" id="notes" value={dashboard.notes || ''}
                         onChange={handleChange} autoComplete="notes" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="link">Link</Label>
-                    <Input type="text" name="link" id="link" value={dashboard.link || ''}
+                    <Input type="textarea" name="link" id="link" value={dashboard.link || ''}
                         onChange={handleChange} autoComplete="link" />
                 </FormGroup>
                 <FormGroup>
@@ -94,7 +97,7 @@ const EditDashboard = () => {
                 </FormGroup>
                 <FormGroup>
                     <Label for="tags">Tags</Label>
-                    <Input type="text" name="tags" id="tags" value={dashboard.tags || ''}
+                    <Input type="textarea" name="tags" id="tags" value={dashboard.tags || ''}
                         onChange={handleChange} autoComplete="tags" />
                 </FormGroup>
                 <FormGroup>
