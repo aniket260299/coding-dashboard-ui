@@ -29,18 +29,20 @@ function ListDashboard() {
     }
 
     const dateFormat = {
-        weekday: 'short', // 'short', 'long', or 'narrow'
-        year: 'numeric', // 'numeric', '2-digit'
-        month: 'short', // 'short', 'long', 'narrow', or '2-digit'
-        day: '2-digit', // 'numeric', '2-digit'
-        hour: '2-digit', // 'numeric', '2-digit'
-        minute: '2-digit', // 'numeric', '2-digit'
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
     };
 
     return (
         <div>
             <div className="float-end">
-                <Button color="success" tag={Link} to="/dashboard/edit" state={{ data: null }}>Add Record</Button>
+                <Link to="/dashboard/edit" state={{ data: null }}>
+                    <Button color="success">Add Record</Button>
+                </Link>
             </div>
             <h2 className="text">Dashboard List</h2>
             <br></br>
@@ -66,9 +68,13 @@ function ListDashboard() {
                                         <td> {dashboard.difficulty}</td>
                                         <td> {new Date(dashboard.date_updated).toLocaleString('en-US', dateFormat)}</td>
                                         <td>
-                                            <Button color="info" tag={Link} to="/dashboard/view/" state={{ data: dashboard }} >View </Button>
-                                            <Button color="primary" tag={Link} to="/dashboard/edit/" state={{ data: dashboard }} style={{ marginLeft: "10px" }} >Update </Button>
-                                            <Button color="danger" style={{ marginLeft: "10px" }} onClick={() => remove(dashboard.id)} className="btn btn-danger">Delete </Button>
+                                            <Link to="/dashboard/view/" state={{ data: dashboard }}>
+                                                <Button color="info">View </Button>
+                                            </Link>
+                                            <Link to="/dashboard/edit/" state={{ data: dashboard }}>
+                                                <Button color="primary" style={{ marginLeft: "10px" }}>Update </Button>
+                                            </Link>
+                                            <Button color="danger" style={{ marginLeft: "10px" }} onClick={() => remove(dashboard.id)}>Delete </Button>
                                         </td>
                                     </tr>
                             )
