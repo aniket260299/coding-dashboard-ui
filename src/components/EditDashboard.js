@@ -78,9 +78,9 @@ const EditDashboard = () => {
                         onChange={handleChange} autoComplete="hint" />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="revision_notes">Revision Notes</Label>
-                    <Input type="text" name="revision_notes" id="revision_notes" value={dashboard.revision_notes || ''}
-                        onChange={handleChange} autoComplete="revision_notes" />
+                    <Label for="notes">Notes</Label>
+                    <Input type="text" name="notes" id="notes" value={dashboard.revision || ''}
+                        onChange={handleChange} autoComplete="notes" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="link">Link</Label>
