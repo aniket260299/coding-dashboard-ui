@@ -12,12 +12,13 @@ const EditDashboard = () => {
         title: '',
         solution: '',
         hint: '',
-        revision_notes: '',
+        notes: '',
         link: '',
         difficulty: '',
         tags: '',
         date_created: '',
-        date_updated: ''
+        date_updated: '',
+        username: ''
     };
     const [dashboard, setDashboard] = useState(initialFormState);
     const navigate = useNavigate();
