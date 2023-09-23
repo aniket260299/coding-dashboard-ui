@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/theme-monokai';
+import 'ace-builds/src-noconflict/theme-chrome';
 
 function ViewDashboard() {
     const { data } = useLocation().state;
@@ -21,11 +21,11 @@ function ViewDashboard() {
             <div>
                 <AceEditor
                     mode="java"
-                    theme="monokai"
+                    theme="chrome"
                     value={data.solution}
                     readOnly="true"
                     width="100%"
-                    height="400px"
+                    height="320px"
                 />
             </div>
             <label> Difficulty: </label>

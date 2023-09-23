@@ -4,7 +4,7 @@ import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import DashboardService from '../service/DashboardService';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/theme-monokai';
+import 'ace-builds/src-noconflict/theme-chrome';
 
 const EditDashboard = () => {
     const initialFormState = {
@@ -60,7 +60,7 @@ const EditDashboard = () => {
                     <Label for="solution">Solution</Label>
                     <AceEditor
                         mode="java"
-                        theme="monokai"
+                        theme="chrome"
                         id="solution"
                         value={dashboard.solution || ''}
                         onChange={data => handleChange({ target: { value: data, name: 'solution' } })}
@@ -68,7 +68,7 @@ const EditDashboard = () => {
                         autoComplete="solution"
                         editorProps={{ $blockScrolling: true }}
                         width="100%"
-                        height="400px"
+                        height="320px"
                     />
                 </FormGroup>
                 <FormGroup>
