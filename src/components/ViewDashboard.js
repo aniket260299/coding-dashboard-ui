@@ -18,7 +18,7 @@ function ViewDashboard() {
     };
 
     return (
-        <div>
+        <div style={{ wordBreak: 'break-all' }}>
             <div className="float-end">
                 <Button color="secondary" tag={Link} to="/dashboards">Back</Button>
             </div>
