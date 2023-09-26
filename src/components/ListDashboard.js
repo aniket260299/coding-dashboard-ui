@@ -53,7 +53,7 @@ function ListDashboard() {
                         <th style={{ minWidth: "150px" }}> Tags</th>
                         <th style={{ minWidth: "90px" }}>Difficulty</th>
                         <th style={{ minWidth: "225px" }}>Date updated</th>
-                        <th align="right" style={{ minWidth: "225px" }}>Actions</th>
+                        <th style={{ minWidth: "225px" }}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
