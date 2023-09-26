@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Button, Table } from 'reactstrap';
+import '../App.css'
 import DashboardService from '../service/DashboardService';
 
 function ListDashboard() {
@@ -28,7 +29,12 @@ function ListDashboard() {
     }
 
     if (loading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="spinner-container" style={{ paddingTop: "20%", paddingLeft: "45%" }}>
+                <div className="loading-spinner">
+                </div>
+            </div>
+        );
     }
 
     const dateFormat = {
