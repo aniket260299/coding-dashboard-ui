@@ -52,10 +52,10 @@ function ListDashboard() {
             <Table responsive hover style={{ wordBreak: 'break-all' }}>
                 <thead>
                     <tr>
-                        <th style={{ minWidth: "200px" }}> Title</th>
-                        <th style={{ minWidth: "150px" }}> Tags</th>
-                        <th style={{ minWidth: "90px" }}>Difficulty</th>
-                        <th style={{ minWidth: "225px" }}>Date updated</th>
+                        <th style={{ minWidth: "100px" }}>Title</th>
+                        <th style={{ minWidth: "100px" }}>Tags</th>
+                        <th style={{ minWidth: "57px" }}>Level</th>
+                        <th style={{ minWidth: "135px" }}>Date updated</th>
                         <th style={{ minWidth: "225px" }}>Actions</th>
                     </tr>
                 </thead>
