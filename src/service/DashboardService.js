@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const CODING_DASHBOARD_URL = "http://localhost:8080/api/coding-dashboard";
+const liveUrl = process.env.CODING_DASHBOARD_LIVE_URL;
+const path = "/api/coding-dashboard"
+const CODING_DASHBOARD_URL = liveUrl ? liveUrl + path : "http://localhost:8080" + path;
+
 
 class DashboardService {
 
