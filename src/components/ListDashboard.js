@@ -18,10 +18,13 @@ function ListDashboard() {
     }, []);
 
     const remove = async (id) => {
-        await DashboardService.deleteDashboard(id).then(() => {
-            let updatedDashboard = [...dashboards].filter(i => i.id !== id);
-            setdashboards(updatedDashboard);
-        });
+        const confirmDelete = window.confirm('Are you sure you want to delete this item?');
+        if (confirmDelete) {
+            await DashboardService.deleteDashboard(id).then(() => {
+                let updatedDashboard = [...dashboards].filter(i => i.id !== id);
+                setdashboards(updatedDashboard);
+            });
+        }
     }
 
     if (loading) {
