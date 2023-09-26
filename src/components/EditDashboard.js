@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import DashboardService from '../service/DashboardService';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
@@ -25,7 +25,7 @@ const EditDashboard = () => {
     const { data } = useLocation().state;
 
     useEffect(() => {
-        if (data) setDashboard(data);
+        data ? setDashboard(data) : setDashboard(initialFormState);
     }, []);
 
     const handleChange = (event) => {
@@ -48,8 +48,8 @@ const EditDashboard = () => {
 
     const title = <h2>{dashboard.id ? 'Edit Dashboard' : 'Add Dashboard'}</h2>;
 
-    return (<div>
-        <Container>
+    return (
+        <div>
             <div className="float-end">
                 <Button color="secondary" tag={Link} to="/dashboards">Back</Button>
             </div>
@@ -105,8 +105,7 @@ const EditDashboard = () => {
                     <Button color="secondary" tag={Link} to="/dashboards">Cancel</Button>
                 </FormGroup>
             </Form>
-        </Container>
-    </div>
+        </div>
     )
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import { Button } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 import DashboardService from '../service/DashboardService';
 
 function ListDashboard() {
@@ -46,45 +46,37 @@ function ListDashboard() {
             </div>
             <h2 className="text">Dashboard List</h2>
             <br></br>
-            <div className="row">
-                <table className="table table-striped table-bordered">
-
-                    <thead>
-                        <tr>
-                            <th> Title</th>
-                            <th> Tags</th>
-                            <th> Difficulty</th>
-                            <th> Date updated</th>
-                            <th> Actions</th>
+            <Table responsive hover style={{ wordBreak: 'break-all' }}>
+                <thead>
+                    <tr>
+                        <th style={{ minWidth: "200px" }}> Title</th>
+                        <th style={{ minWidth: "150px" }}> Tags</th>
+                        <th style={{ minWidth: "90px" }}>Difficulty</th>
+                        <th style={{ minWidth: "225px" }}>Date updated</th>
+                        <th align="right" style={{ minWidth: "225px" }}>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {dashboards.map(dashboard =>
+                        <tr key={dashboard.id}>
+                            <td> {dashboard.title} </td>
+                            <td> {dashboard.tags}</td>
+                            <td> {dashboard.difficulty}</td>
+                            <td> {new Date(dashboard.date_updated).toLocaleString('en-US', dateFormat)}</td>
+                            <td>
+                                <Link to="/dashboard/view/" state={{ data: dashboard }}>
+                                    <Button color="info">View </Button>
+                                </Link>
+                                <Link to="/dashboard/edit/" state={{ data: dashboard }}>
+                                    <Button color="primary" style={{ marginLeft: "10px" }}>Edit </Button>
+                                </Link>
+                                <Button color="danger" style={{ marginLeft: "10px" }} onClick={() => remove(dashboard.id)}>Delete</Button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            dashboards.map(
-                                dashboard =>
-                                    <tr key={dashboard.id}>
-                                        <td width='35%'> {dashboard.title} </td>
-                                        <td width='15%'> {dashboard.tags}</td>
-                                        <td width='5%'> {dashboard.difficulty}</td>
-                                        <td align='center' width='15%'> {new Date(dashboard.date_updated).toLocaleString('en-US', dateFormat)}</td>
-                                        <td align='center' width='15%'>
-                                            <Link to="/dashboard/view/" state={{ data: dashboard }}>
-                                                <Button color="info">View </Button>
-                                            </Link>
-                                            <Link to="/dashboard/edit/" state={{ data: dashboard }}>
-                                                <Button color="primary" style={{ marginLeft: "10px" }}>Edit </Button>
-                                            </Link>
-                                            <Button color="danger" style={{ marginLeft: "10px" }} onClick={() => remove(dashboard.id)}>Delete</Button>
-                                        </td>
-                                    </tr>
-                            )
-                        }
-                    </tbody>
-                </table>
-
-            </div>
-
-        </div >
+                    )}
+                </tbody>
+            </Table>
+        </div>
     )
 }
 
