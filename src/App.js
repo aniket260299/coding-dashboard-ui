@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <Header />
-      <div style={{ padding: '10px 10px' }}>
+      <div style={{ padding: '20px 30px' }}>
         <Routes>
           <Route path="/" element={<ListDashboard />} />
           <Route path="/dashboards" element={<ListDashboard />} />

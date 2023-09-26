@@ -22,7 +22,6 @@ function Header() {
                     </Nav>
                 </Collapse>
             </Navbar>
-            <br></br>
         </div>
     );
 };
