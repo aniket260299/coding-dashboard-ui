@@ -20,7 +20,10 @@ const EditDashboard = () => {
         date_updated: '',
         username: ''
     };
+
     const [dashboard, setDashboard] = useState(initialFormState);
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
     const { index } = useParams();
     const dashboardList = JSON.parse(localStorage.getItem("dashboardList"));
@@ -40,15 +43,23 @@ const EditDashboard = () => {
         dashboard.date_updated = currentTime;
         dashboard.id ? dashboard.date_updated = currentTime : dashboard.date_created = currentTime;
         const response = dashboard.id ? DashboardService.updateDashboard(dashboard) : DashboardService.addDashboard(dashboard);
+        setLoading(true);
         response.then(result => {
             setDashboard(initialFormState);
             index === "-1" ? dashboardList.push(result.data) : dashboardList[index] = result.data;
             localStorage.setItem("dashboardList", JSON.stringify(dashboardList));
+            setLoading(false);
             navigate('/dashboards/');
         });
     }
 
     const title = <h2>{index === '-1' ? 'Add Dashboard' : 'Edit Dashboard'}</h2>;
+
+    if (loading) {
+        return (
+            <div className="loading-spinner"></div>
+        );
+    }
 
     return (
         <div>

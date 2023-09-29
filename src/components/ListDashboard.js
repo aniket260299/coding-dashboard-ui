@@ -5,6 +5,7 @@ import DashboardService from '../service/DashboardService';
 
 function ListDashboard() {
     const [dashboards, setdashboards] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setdashboards(JSON.parse(localStorage.getItem("dashboardList")));
@@ -14,10 +15,12 @@ function ListDashboard() {
         const confirmDelete = window.confirm('Are you sure you want to delete this item?');
         if (confirmDelete) {
             const id = dashboards[index].id;
+            setLoading(true);
             await DashboardService.deleteDashboard(id).then(() => {
                 let updatedDashboard = [...dashboards].filter(i => i.id !== id);
                 localStorage.setItem("dashboardList", JSON.stringify(updatedDashboard));
                 setdashboards(updatedDashboard);
+                setLoading(false);
             });
         }
     }
@@ -30,6 +33,12 @@ function ListDashboard() {
         hour: '2-digit',
         minute: '2-digit'
     };
+
+    if (loading) {
+        return (
+            <div className="loading-spinner"></div>
+        );
+    }
 
     return (
         <div>
