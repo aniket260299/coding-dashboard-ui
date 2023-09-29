@@ -1,12 +1,13 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/theme-chrome';
 
 function ViewDashboard() {
-    const { data } = useLocation().state;
+    const { index } = useParams();
+    const data = JSON.parse(localStorage.getItem("dashboardList"))[index];
 
     const dateFormat = {
         weekday: 'short',

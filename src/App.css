@@ -15,4 +15,10 @@
     border-top: 20px solid #383636;
     border-radius: 50%;
     animation: spinner 1.5s linear infinite;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: fixed;
 }

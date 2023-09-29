@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import DashboardService from '../service/DashboardService';
 import AceEditor from 'react-ace';
@@ -22,15 +22,15 @@ const EditDashboard = () => {
     };
     const [dashboard, setDashboard] = useState(initialFormState);
     const navigate = useNavigate();
-    const { data } = useLocation().state;
+    const { index } = useParams();
+    const dashboardList = JSON.parse(localStorage.getItem("dashboardList"));
 
     useEffect(() => {
-        data ? setDashboard(data) : setDashboard(initialFormState);
+        index === '-1' ? setDashboard(initialFormState) : setDashboard(dashboardList[index]);
     }, []);
 
     const handleChange = (event) => {
         const { name, value } = event.target
-
         setDashboard({ ...dashboard, [name]: value })
     }
 
@@ -42,11 +42,13 @@ const EditDashboard = () => {
         const response = dashboard.id ? DashboardService.updateDashboard(dashboard) : DashboardService.addDashboard(dashboard);
         response.then(result => {
             setDashboard(initialFormState);
-            navigate('/dashboards/', { state: { data: result.data } });
+            index === "-1" ? dashboardList.push(result.data) : dashboardList[index] = result.data;
+            localStorage.setItem("dashboardList", JSON.stringify(dashboardList));
+            navigate('/dashboards/');
         });
     }
 
-    const title = <h2>{dashboard.id ? 'Edit Dashboard' : 'Add Dashboard'}</h2>;
+    const title = <h2>{index === '-1' ? 'Add Dashboard' : 'Edit Dashboard'}</h2>;
 
     return (
         <div>
