@@ -11,6 +11,7 @@
     "bootstrap": "^5.3.1",
     "react": "^18.2.0",
     "react-ace": "^10.1.0",
+    "react-auth-kit": "^2.12.7",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
