@@ -2,7 +2,6 @@
 import React, { useState } from "react"
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import AuthService from "../service/AuthService";
-import { useSignIn } from "react-auth-kit";
 
 const Auth = () => {
     const [authMode, setAuthMode] = useState("signin");
@@ -24,8 +23,6 @@ const Auth = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const signIn = useSignIn();
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         const authData = {
@@ -34,12 +31,6 @@ const Auth = () => {
         };
 
         const response = await (isSignIn ? AuthService.signIn(authData) : AuthService.signUp(authData));
-        signIn({
-            token: response.data,
-            expiresIn: 3595,
-            tokenType: "Bearear",
-            authState: { authData }
-        });
     };
 
     return (
