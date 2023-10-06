@@ -6,6 +6,7 @@ import EditDashboard from './components/EditDashboard';
 import ViewDashboard from './components/ViewDashboard';
 import DashboardService from './service/DashboardService';
 import './App.css'
+import Auth from './components/Auth';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,7 @@ function App() {
           <Route path="/dashboards" element={<ListDashboard />} />
           <Route path="/dashboard/edit/:index" element={<EditDashboard />} />
           <Route path="/dashboard/view/:index" element={<ViewDashboard />} />
+          <Route path='/auth' element={<Auth />} />
         </Routes>
       </div>
     </div>
