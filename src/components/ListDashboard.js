@@ -1,22 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button, Table } from 'reactstrap';
 import DashboardService from '../service/DashboardService';
 
 function ListDashboard() {
     const [dashboards, setdashboards] = useState([]);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    let token = localStorage.getItem("jwt-token");
 
     useEffect(() => {
-        setdashboards(JSON.parse(localStorage.getItem("dashboardList")));
-    }, []);
+        token = localStorage.getItem("jwt-token");
+        if (token) {
+            const dashboardList = JSON.parse(localStorage.getItem("dashboardList"));
+            if (dashboardList) {
+                setdashboards(dashboardList);
+            } else {
+                setLoading(true);
+                DashboardService.getAllDashboard(token)
+                    .then(response => {
+                        localStorage.setItem("dashboardList", JSON.stringify(response.data));
+                        setdashboards(response.data);
+                        setLoading(false);
+                    });
+            }
+        } else {
+            navigate("/auth");
+        }
+    }, [token]);
 
     const remove = async (index) => {
         const confirmDelete = window.confirm('Are you sure you want to delete this item?');
         if (confirmDelete) {
             const id = dashboards[index].id;
             setLoading(true);
-            await DashboardService.deleteDashboard(id).then(() => {
+            await DashboardService.deleteDashboard(id, token).then(() => {
                 let updatedDashboard = [...dashboards].filter(i => i.id !== id);
                 localStorage.setItem("dashboardList", JSON.stringify(updatedDashboard));
                 setdashboards(updatedDashboard);
@@ -38,6 +56,10 @@ function ListDashboard() {
         return (
             <div className="loading-spinner"></div>
         );
+    }
+
+    if (dashboards.length == 0) {
+        return (<></>)
     }
 
     return (
