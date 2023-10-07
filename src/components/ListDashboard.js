@@ -11,22 +11,7 @@ function ListDashboard() {
 
     useEffect(() => {
         token = localStorage.getItem("jwt-token");
-        if (token) {
-            const dashboardList = JSON.parse(localStorage.getItem("dashboardList"));
-            if (dashboardList) {
-                setdashboards(dashboardList);
-            } else {
-                setLoading(true);
-                DashboardService.getAllDashboard(token)
-                    .then(response => {
-                        localStorage.setItem("dashboardList", JSON.stringify(response.data));
-                        setdashboards(response.data);
-                        setLoading(false);
-                    });
-            }
-        } else {
-            navigate("/auth");
-        }
+        token ? setdashboards(JSON.parse(localStorage.getItem("dashboardList"))) : navigate("/auth");
     }, [token]);
 
     const remove = async (index) => {
@@ -58,7 +43,7 @@ function ListDashboard() {
         );
     }
 
-    if (dashboards.length == 0) {
+    if (dashboards.length === 0) {
         return (
             <>
                 <div className="float-end">

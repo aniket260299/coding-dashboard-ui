@@ -18,7 +18,7 @@ const EditDashboard = () => {
         tags: '',
         date_created: '',
         date_updated: '',
-        username: ''
+        username: localStorage.getItem("username")
     };
 
     const [dashboard, setDashboard] = useState(initialFormState);

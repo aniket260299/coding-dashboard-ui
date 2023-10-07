@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import AuthService from "../service/AuthService";
+import DashboardService from "../service/DashboardService";
 
 const Auth = () => {
     const [authMode, setAuthMode] = useState("signin");
+    const [loading, setLoading] = useState(false);
 
     const changeAuthMode = () => {
         setAuthMode(authMode === "signin" ? "signup" : "signin");
@@ -33,16 +35,28 @@ const Auth = () => {
             username: formData.username,
             password: formData.password
         };
-
         const response = await (isSignIn ? AuthService.signIn(authData) : AuthService.signUp(authData));
 
         if (isSignIn) {
             localStorage.setItem("jwt-token", response.data);
+            localStorage.setItem("username", formData.username);
+            setLoading(true);
+            await DashboardService.getAllDashboard(response.data)
+                .then(response1 => {
+                    localStorage.setItem("dashboardList", JSON.stringify(response1.data));
+                    setLoading(false);
+                });
             navigate(from);
         } else {
             changeAuthMode();
         }
     };
+
+    if (loading) {
+        return (
+            <div className="loading-spinner"></div>
+        );
+    }
 
     return (
         <div className="Auth-form-container">
