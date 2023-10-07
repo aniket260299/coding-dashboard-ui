@@ -27,6 +27,7 @@ const EditDashboard = () => {
     const navigate = useNavigate();
     const { index } = useParams();
     const dashboardList = JSON.parse(localStorage.getItem("dashboardList"));
+    const token = localStorage.getItem("jwt-token");
 
     useEffect(() => {
         index === '-1' ? setDashboard(initialFormState) : setDashboard(dashboardList[index]);
@@ -42,7 +43,7 @@ const EditDashboard = () => {
         let currentTime = new Date().getTime();
         dashboard.date_updated = currentTime;
         dashboard.id ? dashboard.date_updated = currentTime : dashboard.date_created = currentTime;
-        const response = dashboard.id ? DashboardService.updateDashboard(dashboard) : DashboardService.addDashboard(dashboard);
+        const response = dashboard.id ? DashboardService.updateDashboard(dashboard, token) : DashboardService.addDashboard(dashboard, token);
         setLoading(true);
         response.then(result => {
             setDashboard(initialFormState);

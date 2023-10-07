@@ -1,30 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import Header from './components/Header';
 import ListDashboard from './components/ListDashboard';
 import EditDashboard from './components/EditDashboard';
 import ViewDashboard from './components/ViewDashboard';
-import DashboardService from './service/DashboardService';
 import './App.css'
 import Auth from './components/Auth';
 
 function App() {
-  const [loading, setLoading] = useState(false);
+  const jwtToken = localStorage.getItem("jwt-token");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
-    DashboardService.getAllDashboard()
-      .then(response => {
-        localStorage.setItem("dashboardList", JSON.stringify(response.data));
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="loading-spinner"></div>
-    );
-  }
+    if (!jwtToken) {
+      navigate("/auth");
+    }
+  }, [jwtToken]);
 
   return (
     <div>

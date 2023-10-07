@@ -5,26 +5,31 @@ const path = "/api/coding-dashboard"
 const CODING_DASHBOARD_URL = liveUrl ? liveUrl + path : "http://localhost:8080" + path;
 
 
+
+
 class DashboardService {
-
-    getAllDashboard() {
-        return axios.get(CODING_DASHBOARD_URL);
+    getConfig(token) {
+        return { headers: { Authorization: "Bearer " + token } }
     }
 
-    addDashboard(dashboard) {
-        return axios.post(CODING_DASHBOARD_URL, dashboard);
+    getAllDashboard(token) {
+        return axios.get(CODING_DASHBOARD_URL, this.getConfig(token));
     }
 
-    getDashboardById(id) {
-        return axios.get(CODING_DASHBOARD_URL + '/' + id);
+    addDashboard(dashboard, token) {
+        return axios.post(CODING_DASHBOARD_URL, dashboard, this.getConfig(token));
     }
 
-    updateDashboard(dashboard, id) {
-        return axios.put(CODING_DASHBOARD_URL, dashboard);
+    getDashboardById(id, token) {
+        return axios.get(CODING_DASHBOARD_URL + '/' + id, this.getConfig(token));
     }
 
-    deleteDashboard(id) {
-        return axios.delete(CODING_DASHBOARD_URL + '/' + id);
+    updateDashboard(dashboard, token) {
+        return axios.put(CODING_DASHBOARD_URL, dashboard, this.getConfig(token));
+    }
+
+    deleteDashboard(id, token) {
+        return axios.delete(CODING_DASHBOARD_URL + '/' + id, this.getConfig(token));
     }
 }
 

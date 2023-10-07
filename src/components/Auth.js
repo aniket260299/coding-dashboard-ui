@@ -1,5 +1,5 @@
-
-import React, { useState } from "react"
+import React, { useState } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import AuthService from "../service/AuthService";
 
@@ -23,6 +23,10 @@ const Auth = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/dashboards";
+    const navigate = useNavigate();
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const authData = {
@@ -31,6 +35,13 @@ const Auth = () => {
         };
 
         const response = await (isSignIn ? AuthService.signIn(authData) : AuthService.signUp(authData));
+
+        if (isSignIn) {
+            localStorage.setItem("jwt-token", response.data);
+            navigate(from);
+        } else {
+            changeAuthMode();
+        }
     };
 
     return (
@@ -44,7 +55,6 @@ const Auth = () => {
                             {isSignIn ? "Sign Up" : "Sign In"}
                         </span>
                     </div>
-
                     <FormGroup>
                         <Label for="username">Username</Label>
                         <Input className="form-control mt-1" type="Textbox" name="username" id="username" value={formData.username}
