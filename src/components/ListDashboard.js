@@ -59,7 +59,16 @@ function ListDashboard() {
     }
 
     if (dashboards.length == 0) {
-        return (<></>)
+        return (
+            <>
+                <div className="float-end">
+                    <Link to="/dashboard/edit/-1">
+                        <Button color="success">Add Record</Button>
+                    </Link>
+                </div>
+                <h2 className="text">Dashboard List</h2>
+            </>
+        );
     }
 
     return (
