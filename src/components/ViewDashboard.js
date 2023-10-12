@@ -29,6 +29,15 @@ function ViewDashboard() {
             <div><strong>Title: </strong>{data.title}</div>
             <br></br>
 
+            <div><strong> Link: </strong>{data.link}</div>
+            <br></br>
+
+            <div><strong> Difficulty: </strong>{data.difficulty}</div>
+            <br></br>
+
+            <div><strong> Tags: </strong>{data.tags}</div>
+            <br></br>
+
             <label> <strong>Solution:</strong></label>
             <div>
                 <AceEditor
@@ -42,25 +51,16 @@ function ViewDashboard() {
             </div>
             <br></br>
 
-            <div><strong> Hint: </strong>{data.hint}</div>
+            <div><strong> Date Created: </strong>{new Date(data.date_created).toLocaleString('en-US', dateFormat)}</div>
+            <br></br>
+
+            <div><strong> Date Updated: </strong>{new Date(data.date_updated).toLocaleString('en-US', dateFormat)}</div>
             <br></br>
 
             <div><strong> Notes: </strong>{data.notes}</div>
             <br></br>
 
-            <div><strong> Link: </strong>{data.link}</div>
-            <br></br>
-
-            <div><strong> Difficulty: </strong>{data.difficulty}</div>
-            <br></br>
-
-            <div><strong> Tags: </strong>{data.tags}</div>
-            <br></br>
-
-            <div><strong> Date Created: </strong>{new Date(data.date_created).toLocaleString('en-US', dateFormat)}</div>
-            <br></br>
-
-            <div><strong> Date Updated: </strong>{new Date(data.date_updated).toLocaleString('en-US', dateFormat)}</div>
+            <div><strong> Hint: </strong>{data.hint}</div>
             <br></br>
         </div>
     );
