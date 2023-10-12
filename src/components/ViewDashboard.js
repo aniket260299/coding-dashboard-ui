@@ -29,7 +29,13 @@ function ViewDashboard() {
             <div><strong>Title: </strong>{data.title}</div>
             <br></br>
 
-            <div><strong> Link: </strong>{data.link}</div>
+            <div><strong> Links: </strong><br></br>
+                {data.link.split(/\r?\n/).map((link) =>
+                    <>
+                        <a href={link} target="_blank">{link}</a>
+                        <br></br>
+                    </>
+                )}</div>
             <br></br>
 
             <div><strong> Difficulty: </strong>{data.difficulty}</div>
@@ -57,10 +63,10 @@ function ViewDashboard() {
             <div><strong> Date Updated: </strong>{new Date(data.date_updated).toLocaleString('en-US', dateFormat)}</div>
             <br></br>
 
-            <div><strong> Notes: </strong>{data.notes}</div>
+            <div><strong> Notes: </strong><pre>{data.notes}</pre></div>
             <br></br>
 
-            <div><strong> Hint: </strong>{data.hint}</div>
+            <div><strong> Hint: </strong><pre>{data.hint}</pre></div>
             <br></br>
         </div>
     );
