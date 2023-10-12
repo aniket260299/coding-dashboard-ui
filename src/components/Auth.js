@@ -40,6 +40,8 @@ const Auth = () => {
         if (isSignIn) {
             localStorage.setItem("jwt-token", response.data);
             localStorage.setItem("username", formData.username);
+            const now = new Date();
+            localStorage.setItem("jwt-token-expiry", now.setHours(now.getHours() + 23));
             setLoading(true);
             await DashboardService.getAllDashboard(response.data)
                 .then(response1 => {
