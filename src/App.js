@@ -4,18 +4,34 @@ import Header from './components/Header';
 import ListDashboard from './components/ListDashboard';
 import EditDashboard from './components/EditDashboard';
 import ViewDashboard from './components/ViewDashboard';
-import './App.css'
+import DashboardService from './service/DashboardService';
 import Auth from './components/Auth';
+import './App.css'
+
 
 function App() {
   const jwtToken = localStorage.getItem("jwt-token");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!jwtToken) {
+    if (jwtToken) {
+      setLoading(true);
+      DashboardService.getAllDashboard(jwtToken)
+        .then(response => {
+          localStorage.setItem("dashboardList", JSON.stringify(response.data));
+          setLoading(false);
+        });
+    } else {
       navigate("/auth");
     }
-  }, [jwtToken]);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="loading-spinner"></div>
+    );
+  }
 
   return (
     <div>
