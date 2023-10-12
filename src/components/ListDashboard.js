@@ -79,7 +79,7 @@ function ListDashboard() {
                     {dashboards.map((dashboard, index) =>
                         <tr key={dashboard.id}>
                             <td> {dashboard.title} </td>
-                            <td> {dashboard.tags}</td>
+                            <td> {dashboard.tags.split(",")[0]}</td>
                             <td> {dashboard.difficulty}</td>
                             <td> {new Date(dashboard.date_updated).toLocaleString('en-US', dateFormat)}</td>
                             <td>
