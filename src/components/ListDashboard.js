@@ -10,9 +10,8 @@ function ListDashboard() {
     let token = localStorage.getItem("jwt-token");
 
     useEffect(() => {
-        token = localStorage.getItem("jwt-token");
-        token ? setdashboards(JSON.parse(localStorage.getItem("dashboardList"))) : navigate("/auth");
-    }, [token]);
+        setdashboards(JSON.parse(localStorage.getItem("dashboardList")));
+    }, []);
 
     const remove = async (index) => {
         const confirmDelete = window.confirm('Are you sure you want to delete this item?');
