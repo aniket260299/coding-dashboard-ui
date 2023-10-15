@@ -60,7 +60,7 @@ function ViewDashboard() {
                 <div><strong> Difficulty: </strong>{data.difficulty}</div>
                 <br></br>
 
-                <div><strong> Tags: </strong>{data.tags}</div>
+                <div><strong> Tags: </strong>{data.tags.split(",").map(tag => <>{tag + " "}</>)}</div>
                 <br></br>
 
                 <label> <strong>Solution:</strong></label>
