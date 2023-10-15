@@ -27,11 +27,25 @@ const EditDashboard = () => {
     const navigate = useNavigate();
     const { index } = useParams();
     const dashboardList = JSON.parse(localStorage.getItem("dashboardList"));
-    const token = localStorage.getItem("jwt-token");
+    let token = localStorage.getItem("jwt-token");
 
     useEffect(() => {
-        index === '-1' ? setDashboard(initialFormState) : setDashboard(dashboardList[index]);
+        if (authenticated()) {
+            index === '-1' ? setDashboard(initialFormState) : setDashboard(dashboardList[index]);
+        } else {
+            navigate("/auth");
+        }
     }, []);
+
+    const authenticated = () => {
+        if (token) {
+            const now = new Date();
+            const expiry = new Date(Number(localStorage.getItem("jwt-token-expiry")));
+            if (expiry > now) return true;
+        }
+        localStorage.clear();
+        return false;
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target

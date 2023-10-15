@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     jwtToken = localStorage.getItem("jwt-token");
-    if (authenticated) {
+    if (authenticated()) {
       setLoading(true);
       DashboardService.getAllDashboard(jwtToken)
         .then(response => {
@@ -28,21 +28,13 @@ function App() {
     }
   }, []);
 
-  const requireAuth = (nextState, replace) => {
-    if (!authenticated) {
-      replace({
-        pathname: "/auth",
-        state: { nextPathname: nextState.location.pathname }
-      });
-    }
-  }
-
   const authenticated = () => {
     if (jwtToken) {
       const now = new Date();
       const expiry = new Date(Number(localStorage.getItem("jwt-token-expiry")));
       if (expiry > now) return true;
     }
+    localStorage.clear();
     return false;
   }
 
@@ -57,10 +49,10 @@ function App() {
       <Header />
       <div style={{ padding: '20px 30px' }}>
         <Routes>
-          <Route path="/" element={<ListDashboard />} onEnter={requireAuth()} />
-          <Route path="/dashboards" element={<ListDashboard />} onEnter={requireAuth()} />
-          <Route path="/dashboard/edit/:index" element={<EditDashboard />} onEnter={requireAuth()} />
-          <Route path="/dashboard/view/:index" element={<ViewDashboard />} onEnter={requireAuth()} />
+          <Route path="/" element={<ListDashboard />} />
+          <Route path="/dashboards" element={<ListDashboard />} />
+          <Route path="/dashboard/edit/:index" element={<EditDashboard />} />
+          <Route path="/dashboard/view/:index" element={<ViewDashboard />} />
           <Route path='/auth' element={<Auth />} />
         </Routes>
       </div>

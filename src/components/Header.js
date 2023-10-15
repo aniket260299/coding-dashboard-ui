@@ -9,12 +9,24 @@ function Header() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        token = localStorage.getItem("jwt-token");
+        if (!authenticated()) {
+            navigate("/auth");
+        }
     }, []);
+
+    const authenticated = () => {
+        if (token) {
+            const now = new Date();
+            const expiry = new Date(Number(localStorage.getItem("jwt-token-expiry")));
+            if (expiry > now) return true;
+        }
+        localStorage.clear();
+        return false;
+    }
 
     const handleLogout = () => {
         localStorage.clear();
-        navigate("auth");
+        navigate("/auth");
     };
 
     return (

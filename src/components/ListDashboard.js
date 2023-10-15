@@ -10,8 +10,22 @@ function ListDashboard() {
     let token = localStorage.getItem("jwt-token");
 
     useEffect(() => {
-        setdashboards(JSON.parse(localStorage.getItem("dashboardList")));
+        if (authenticated()) {
+            setdashboards(JSON.parse(localStorage.getItem("dashboardList")));
+        } else {
+            navigate("/auth");
+        }
     }, []);
+
+    const authenticated = () => {
+        if (token) {
+            const now = new Date();
+            const expiry = new Date(Number(localStorage.getItem("jwt-token-expiry")));
+            if (expiry > now) return true;
+        }
+        localStorage.clear();
+        return false;
+    }
 
     const remove = async (index) => {
         const confirmDelete = window.confirm('Are you sure you want to delete this item?');
