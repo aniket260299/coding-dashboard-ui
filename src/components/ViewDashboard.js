@@ -48,6 +48,12 @@ function ViewDashboard() {
                 <div><strong>Title: </strong>{data.title}</div>
                 <br></br>
 
+                <div><strong> Tags: </strong>{data.tags.split(",").map(tag => <>{tag + " "}</>)}</div>
+                <br></br>
+
+                <div><strong> Difficulty: </strong>{data.difficulty}</div>
+                <br></br>
+
                 <div><strong> Links: </strong><br></br>
                     {data.link.split(/\r?\n/).map((link) =>
                         <>
@@ -55,12 +61,6 @@ function ViewDashboard() {
                             <br></br>
                         </>
                     )}</div>
-                <br></br>
-
-                <div><strong> Difficulty: </strong>{data.difficulty}</div>
-                <br></br>
-
-                <div><strong> Tags: </strong>{data.tags.split(",").map(tag => <>{tag + " "}</>)}</div>
                 <br></br>
 
                 <label> <strong>Solution:</strong></label>
@@ -71,21 +71,19 @@ function ViewDashboard() {
                         value={data.solution}
                         readOnly={true}
                         width="100%"
-                        height="320px"
+                        height="400px"
                     />
                 </div>
                 <br></br>
+
+                <div><strong> Notes: </strong><pre>{data.notes}</pre></div>
+
+                <div><strong> Hint: </strong><pre>{data.hint}</pre></div>
 
                 <div><strong> Date Created: </strong>{new Date(data.date_created).toLocaleString('en-US', dateFormat)}</div>
                 <br></br>
 
                 <div><strong> Date Updated: </strong>{new Date(data.date_updated).toLocaleString('en-US', dateFormat)}</div>
-                <br></br>
-
-                <div><strong> Notes: </strong><pre>{data.notes}</pre></div>
-                <br></br>
-
-                <div><strong> Hint: </strong><pre>{data.hint}</pre></div>
                 <br></br>
             </div>}
         </>

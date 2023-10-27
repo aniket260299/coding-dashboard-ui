@@ -52,20 +52,31 @@ const EditDashboard = () => {
         setDashboard({ ...dashboard, [name]: value })
     }
 
+    const validateForm = () => {
+        if (isNaN(dashboard.difficulty) || dashboard.difficulty < 1 || dashboard.difficulty > 10) {
+            alert('Please enter difficulty in integer between [1-10]');
+            setDashboard({ ...dashboard, difficulty: '' });
+            return false;
+        }
+        return true;
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        let currentTime = new Date().getTime();
-        dashboard.date_updated = currentTime;
-        dashboard.id ? dashboard.date_updated = currentTime : dashboard.date_created = currentTime;
-        const response = dashboard.id ? DashboardService.updateDashboard(dashboard, token) : DashboardService.addDashboard(dashboard, token);
-        setLoading(true);
-        response.then(result => {
-            setDashboard(initialFormState);
-            index === "-1" ? dashboardList.push(result.data) : dashboardList[index] = result.data;
-            localStorage.setItem("dashboardList", JSON.stringify(dashboardList));
-            setLoading(false);
-            navigate('/dashboards/');
-        });
+        if (validateForm()) {
+            let currentTime = new Date().getTime();
+            dashboard.date_updated = currentTime;
+            dashboard.id ? dashboard.date_updated = currentTime : dashboard.date_created = currentTime;
+            const response = dashboard.id ? DashboardService.updateDashboard(dashboard, token) : DashboardService.addDashboard(dashboard, token);
+            setLoading(true);
+            response.then(result => {
+                setDashboard(initialFormState);
+                index === "-1" ? dashboardList.push(result.data) : dashboardList[index] = result.data;
+                localStorage.setItem("dashboardList", JSON.stringify(dashboardList));
+                setLoading(false);
+                navigate('/dashboards/');
+            });
+        }
     }
 
     const title = <h2>{index === '-1' ? 'Add Dashboard' : 'Edit Dashboard'}</h2>;
@@ -85,8 +96,23 @@ const EditDashboard = () => {
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label for="title">Title</Label>
-                    <Input type="textarea" name="title" id="title" value={dashboard.title || ''}
+                    <Input type="textarea" placeholder="Please enter question's title" name="title" id="title" value={dashboard.title || ''}
                         onChange={handleChange} autoComplete="title" />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="tags">Tags</Label>
+                    <Input type="textarea" placeholder="Please enter tags like 'sheet,topic,no.' eg: GFG Sheet,Linked List,1" name="tags" id="tags" value={dashboard.tags || ''}
+                        onChange={handleChange} autoComplete="tags" />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="difficulty">Difficulty</Label>
+                    <Input type="text" placeholder="Please enter difficulty in integer between [1-10]" name="difficulty" id="difficulty" value={dashboard.difficulty || ''}
+                        onChange={handleChange} autoComplete="difficulty" />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="link">Link</Label>
+                    <Input type="textarea" placeholder="Please enter link. Multiple links can be added in new line." name="link" id="link" value={dashboard.link || ''}
+                        onChange={handleChange} autoComplete="link" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="solution">Solution</Label>
@@ -104,29 +130,14 @@ const EditDashboard = () => {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="hint">Hint</Label>
-                    <Input type="textarea" name="hint" id="hint" value={dashboard.hint || ''}
-                        onChange={handleChange} autoComplete="hint" />
-                </FormGroup>
-                <FormGroup>
                     <Label for="notes">Notes</Label>
-                    <Input type="textarea" name="notes" id="notes" value={dashboard.notes || ''}
+                    <Input type="textarea" placeholder="Please enter notes." name="notes" id="notes" value={dashboard.notes || ''}
                         onChange={handleChange} autoComplete="notes" />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="link">Link</Label>
-                    <Input type="textarea" name="link" id="link" value={dashboard.link || ''}
-                        onChange={handleChange} autoComplete="link" />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="difficulty">Difficulty</Label>
-                    <Input type="text" name="difficulty" id="difficulty" value={dashboard.difficulty || ''}
-                        onChange={handleChange} autoComplete="difficulty" />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="tags">Tags</Label>
-                    <Input type="textarea" name="tags" id="tags" value={dashboard.tags || ''}
-                        onChange={handleChange} autoComplete="tags" />
+                    <Label for="hint">Hint</Label>
+                    <Input type="textarea" placeholder="Please enter hints." name="hint" id="hint" value={dashboard.hint || ''}
+                        onChange={handleChange} autoComplete="hint" />
                 </FormGroup>
                 <FormGroup>
                     <Button color="primary" type="submit">Save</Button>{' '}

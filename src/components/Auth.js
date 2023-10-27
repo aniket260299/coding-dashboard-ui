@@ -29,28 +29,45 @@ const Auth = () => {
     const from = location.state?.from?.pathname || "/dashboards";
     const navigate = useNavigate();
 
+    const validateForm = () => {
+        if (isSignIn || formData.password === formData.rePassword) {
+            return true;
+        }
+        else {
+            alert('Passwords not matched. Please re-enter!');
+            setFormData({
+                username: formData.username,
+                password: '',
+                rePassword: ''
+            });
+            return false;
+        }
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const authData = {
-            username: formData.username,
-            password: formData.password
-        };
-        const response = await (isSignIn ? AuthService.signIn(authData) : AuthService.signUp(authData));
+        if (validateForm()) {
+            const authData = {
+                username: formData.username,
+                password: formData.password
+            };
+            const response = await (isSignIn ? AuthService.signIn(authData) : AuthService.signUp(authData));
 
-        if (isSignIn) {
-            localStorage.setItem("jwt-token", response.data);
-            localStorage.setItem("username", formData.username);
-            const now = new Date();
-            localStorage.setItem("jwt-token-expiry", now.setHours(now.getHours() + 23));
-            setLoading(true);
-            await DashboardService.getAllDashboard(response.data)
-                .then(response1 => {
-                    localStorage.setItem("dashboardList", JSON.stringify(response1.data));
-                    setLoading(false);
-                });
-            navigate(from);
-        } else {
-            changeAuthMode();
+            if (isSignIn) {
+                localStorage.setItem("jwt-token", response.data);
+                localStorage.setItem("username", formData.username);
+                const now = new Date();
+                localStorage.setItem("jwt-token-expiry", now.setHours(now.getHours() + 23));
+                setLoading(true);
+                await DashboardService.getAllDashboard(response.data)
+                    .then(response1 => {
+                        localStorage.setItem("dashboardList", JSON.stringify(response1.data));
+                        setLoading(false);
+                    });
+                navigate(from);
+            } else {
+                changeAuthMode();
+            }
         }
     };
 
