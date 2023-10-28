@@ -55,15 +55,15 @@ function ViewDashboard() {
                 <br></br>
 
                 <div><strong> Links: </strong><br></br>
-                    {data.link.split(/\r?\n/).map((link) =>
+                    {data.link.split(/\r?\n/).map((link, key) =>
                         <>
-                            <a href={link} target="_blank">{link}</a>
+                            <a key={key} href={link} target="_blank">{link}</a>
                             <br></br>
                         </>
                     )}</div>
                 <br></br>
 
-                <label> <strong>Solution:</strong></label>
+                <label><strong>Solution:</strong></label>
                 <div>
                     <AceEditor
                         mode="java"

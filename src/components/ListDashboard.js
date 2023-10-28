@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
-import { Button, Table } from 'reactstrap';
+import { Button } from 'reactstrap';
 import DashboardService from '../service/DashboardService';
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
@@ -59,23 +59,56 @@ function ListDashboard() {
     }
 
     const columnDefs = useMemo(() => ([
-        { field: 'title' },
+        { field: 'title', resizable: true, flex: 3 },
         {
             headerName: 'Tags',
             valueGetter: p => {
                 return p.data.tags.split(',').join(' ')
             },
             filter: 'agTextColumnFilter',
+            filterParams: {
+                debounceMs: 0,
+                buttons: ['clear']
+            },
+            resizable: true,
+            flex: 1
         },
-        { headerName: 'Level', field: 'difficulty' },
-        { headerName: 'Action', cellRenderer: Action }
+        { headerName: 'Level', field: 'difficulty', width: 100, maxWidth: 70, minWidth: 70 },
+        { headerName: 'Action', cellRenderer: Action, width: 300, maxWidth: 250, minWidth: 250 }
     ]), []);
 
     const defaultColDef = useMemo(() => ({
-        flex: 1,
-        resizable: true,
-        sortable: true
+        sortable: true,
+        suppressMovable: true,
     }), []);
+
+    const gridRef = useRef();
+
+    const onFilterChanged = useCallback(() => {
+        localStorage.setItem("list-dashboard-tags-filter", JSON.stringify(gridRef.current.api.getFilterModel()));
+    });
+
+    const onFirstDataRendered = useCallback(() => {
+        if (localStorage.getItem("list-dashboard-tags-filter")) {
+            gridRef.current.api.setFilterModel(JSON.parse(localStorage.getItem("list-dashboard-tags-filter")));
+        }
+    });
+
+    const dashboardGrid = (
+        <div className="ag-theme-alpine" style={{ height: 600 }}>
+            <AgGridReact
+                ref={gridRef}
+                onFirstDataRendered={onFirstDataRendered}
+                onFilterChanged={onFilterChanged}
+                popupParent={document.body}
+                rowData={dashboards}
+                columnDefs={columnDefs}
+                defaultColDef={defaultColDef}
+                suppressMenuHide={true}
+                rowHeight='48'
+            />
+        </div>
+    );
 
     return (
         <>
@@ -88,11 +121,7 @@ function ListDashboard() {
                     </div>
                     <h2 className="text">Dashboard List</h2>
                     <br></br>
-                    {dashboards.length !== 0 &&
-                        <div className="ag-theme-alpine" style={{ height: 600 }}>
-                            <AgGridReact rowHeight='50' rowData={dashboards} columnDefs={columnDefs} defaultColDef={defaultColDef}></AgGridReact>
-                        </div>
-                    }
+                    {dashboardGrid}
                 </>
             }
         </>
