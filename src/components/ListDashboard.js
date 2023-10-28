@@ -48,13 +48,15 @@ function ListDashboard() {
 
     const Action = (data) => {
         return <>
-            <Link to={"/dashboard/view/" + data.node.rowIndex}>
-                <Button color="info">View </Button>
+            <Link to={"/dashboard/view/" + data.node.rowIndex}
+                style={{ textDecoration: 'none', color: '#7B5800' }}> [ View ]
             </Link>
-            <Link to={"/dashboard/edit/" + data.node.rowIndex}>
-                <Button color="primary" style={{ marginLeft: "10px" }}>Edit </Button>
+            <Link to={"/dashboard/edit/" + data.node.rowIndex}
+                style={{ textDecoration: 'none', color: '#F5B000', marginLeft: '10px' }}> [ Edit ]
             </Link>
-            <Button color="danger" style={{ marginLeft: "10px" }} onClick={() => remove(data.node.rowIndex)}>Delete</Button>
+            <Link onClick={() => remove(data.node.rowIndex)}
+                style={{ textDecoration: 'none', color: '#F55500', marginLeft: '10px' }}> [ Delete ]
+            </Link>
         </>
     }
 
@@ -74,7 +76,7 @@ function ListDashboard() {
             flex: 1
         },
         { headerName: 'Level', field: 'difficulty', width: 100, maxWidth: 70, minWidth: 70 },
-        { headerName: 'Action', cellRenderer: Action, width: 300, maxWidth: 250, minWidth: 250 }
+        { headerName: 'Action', cellRenderer: Action, width: 250, maxWidth: 230, minWidth: 230 }
     ]), []);
 
     const defaultColDef = useMemo(() => ({
@@ -114,13 +116,11 @@ function ListDashboard() {
         <>
             {loading ? <div className="loading-spinner"></div> :
                 <>
-                    <div className="float-end">
-                        <Link to="/dashboard/edit/-1">
-                            <Button color="success">Add Record</Button>
-                        </Link>
-                    </div>
-                    <h2 className="text">Dashboard List</h2>
-                    <br></br>
+                    <Link to="/dashboard/edit/-1" className="float-end"
+                        style={{ textDecoration: 'none', color: 'grey' }}> [ Add Record ]
+                    </Link>
+                    <strong>Dashboard List</strong>
+                    <hr size="4" color="grey" />
                     {dashboardGrid}
                 </>
             }

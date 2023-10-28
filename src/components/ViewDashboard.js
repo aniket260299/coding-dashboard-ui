@@ -39,11 +39,11 @@ function ViewDashboard() {
     return (
         <> {data &&
             <div style={{ wordBreak: 'break-all' }}>
-                <div className="float-end">
-                    <Button color="secondary" tag={Link} to="/dashboards">Back</Button>
-                </div>
-                <h2 className="text">View Dashboard</h2>
-                <br></br>
+                <Link to="/dashboards" className="float-end"
+                    style={{ textDecoration: 'none', color: 'grey' }}> [ Back ]
+                </Link>
+                <strong>View Dashboard</strong>
+                <hr size="4" color="grey" />
 
                 <div><strong>Title: </strong>{data.title}</div>
                 <br></br>

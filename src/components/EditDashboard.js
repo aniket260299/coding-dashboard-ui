@@ -79,7 +79,7 @@ const EditDashboard = () => {
         }
     }
 
-    const title = <h2>{index === '-1' ? 'Add Dashboard' : 'Edit Dashboard'}</h2>;
+    const title = <strong>{index === '-1' ? 'Add Dashboard' : 'Edit Dashboard'}</strong>;
 
     if (loading) {
         return (
@@ -89,10 +89,11 @@ const EditDashboard = () => {
 
     return (
         <div>
-            <div className="float-end">
-                <Button color="secondary" tag={Link} to="/dashboards">Back</Button>
-            </div>
+            <Link to="/dashboards" className="float-end"
+                style={{ textDecoration: 'none', color: 'grey' }}> [ Back ]
+            </Link>
             {title}
+            <hr size="4" color="grey" />
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label for="title">Title</Label>

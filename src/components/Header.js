@@ -29,19 +29,15 @@ function Header() {
         navigate("/auth");
     };
 
+
     return (
         token ?
-            <div>
-                <Navbar color="dark" dark expand="md">
+            <div style={{ padding: '5px 15px' }}>
+                <Navbar color="light" expand="md">
                     <NavbarBrand tag={Link} to="/">Home</NavbarBrand>
-                    <NavbarToggler onClick={() => { setIsOpen(!isOpen) }} />
-                    <Collapse isOpen={isOpen} navbar>
-                        <Nav className="justify-content-end" style={{ width: "100%" }} navbar>
-                            <NavItem>
-                                <NavLink onClick={handleLogout}>Logout</NavLink>
-                            </NavItem>
-                        </Nav>
-                    </Collapse>
+                    <NavbarBrand className="justify-content-end"
+                        tag={Link} to="/auth" onClick={handleLogout}>Logout
+                    </NavbarBrand>
                 </Navbar>
             </div>
             : <></>
