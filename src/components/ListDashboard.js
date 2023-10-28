@@ -90,7 +90,7 @@ function ListDashboard() {
                     <br></br>
                     {dashboards.length !== 0 &&
                         <div className="ag-theme-alpine" style={{ height: 600 }}>
-                            <AgGridReact rowData={dashboards} columnDefs={columnDefs} defaultColDef={defaultColDef}></AgGridReact>
+                            <AgGridReact rowHeight='50' rowData={dashboards} columnDefs={columnDefs} defaultColDef={defaultColDef}></AgGridReact>
                         </div>
                     }
                 </>
