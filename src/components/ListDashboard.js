@@ -75,7 +75,7 @@ function ListDashboard() {
             resizable: true,
             flex: 1
         },
-        { headerName: 'Level', field: 'difficulty', width: 100, maxWidth: 70, minWidth: 70 },
+        { headerName: 'Level', field: 'difficulty', width: 100, maxWidth: 100, minWidth: 100 },
         { headerName: 'Action', cellRenderer: Action, width: 250, maxWidth: 230, minWidth: 230 }
     ]), []);
 
