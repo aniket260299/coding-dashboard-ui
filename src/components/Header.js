@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Navbar, NavbarBrand } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Header() {
-
-    const [isOpen, setIsOpen] = useState(false);
     let token = localStorage.getItem("jwt-token");
     const navigate = useNavigate();
 
