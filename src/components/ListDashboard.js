@@ -106,7 +106,6 @@ function ListDashboard() {
                 columnDefs={columnDefs}
                 defaultColDef={defaultColDef}
                 suppressMenuHide={true}
-                rowHeight='48'
             />
         </div>
     );
