@@ -109,7 +109,7 @@ const Auth = () => {
                     }
 
                     <FormGroup className="d-grid gap-2 mt-3">
-                        <button color='blue' type="submit">{isSignIn ? "[ Sign In ]" : "[ Sign Up ]"}</button>
+                        <button style={{ color: "black" }} type="submit">{isSignIn ? "[ Sign In ]" : "[ Sign Up ]"}</button>
                     </FormGroup>
                 </div>
             </Form>
