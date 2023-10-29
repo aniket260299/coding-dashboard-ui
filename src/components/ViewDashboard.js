@@ -63,8 +63,8 @@ function ViewDashboard() {
                 />
             </div>
 
-            <div style={{ width: '50%', float: 'left', paddingRight: '20px', wordBreak: 'break-all' }}>
-                <Table height="600px">
+            <div style={{ width: '50%', float: 'left', paddingRight: '20px' }}>
+                <Table height='600px'>
                     <tr>
                         <th>Title:</th>
                         <td>{data.title}</td>
@@ -77,15 +77,15 @@ function ViewDashboard() {
 
                     <tr>
                         <th>Difficulty:</th>
-                        <td>{data.difficulty}</td>
+                        <td>{" " + data.difficulty}</td>
                     </tr>
 
                     <tr>
                         <th>Links:</th>
                         <td>
-                            {data.link.split(/\r?\n/).map((link, key) =>
+                            {data.link.split(/\r?\n/).map((link) =>
                                 <>
-                                    <a style={{ textDecoration: 'none', color: '#808000' }} key={key} href={link} target="_blank">{link}</a>
+                                    <a style={{ textDecoration: 'none', color: '#808000' }} href={link} target="_blank">{link}</a>
                                     <br></br>
                                 </>
                             )}
@@ -94,12 +94,24 @@ function ViewDashboard() {
 
                     <tr>
                         <th>Notes:</th>
-                        <td><pre>{hideItems ? 'HIDDEN' : data.notes}</pre></td>
+                        <td>
+                            {hideItems ? 'HIDDEN' : data.notes.split(/\r?\n/).map((note) =>
+                                <>
+                                    {note}
+                                    <br></br>
+                                </>
+                            )}</td>
                     </tr>
 
                     <tr>
                         <th>Hint:</th>
-                        <td><pre>{hideItems ? 'HIDDEN' : data.hint}</pre></td>
+                        <td>
+                            {hideItems ? 'HIDDEN' : data.hint.split(/\r?\n/).map((hint) =>
+                                <>
+                                    {hint}
+                                    <br></br>
+                                </>
+                            )}</td>
                     </tr>
 
                     <tr>
