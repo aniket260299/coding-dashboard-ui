@@ -89,61 +89,66 @@ const EditDashboard = () => {
 
     return (
         <div>
-            <Link to="/dashboards" className="float-end"
-                style={{ textDecoration: 'none', color: 'grey' }}> [ Back ]
-            </Link>
-            {title}
-            <hr size="4" color="grey" />
             <Form onSubmit={handleSubmit}>
+                <Link to="/dashboards" className="float-end"
+                    style={{ textDecoration: 'none', color: 'grey' }}> [ Back ]
+                </Link>
                 <FormGroup>
-                    <Label for="title">Title</Label>
-                    <Input type="textarea" placeholder="Please enter question's title" name="title" id="title" value={dashboard.title || ''}
-                        onChange={handleChange} autoComplete="title" />
+                    <button className="float-end" type="submit">[ Save ]</button>
                 </FormGroup>
-                <FormGroup>
-                    <Label for="tags">Tags</Label>
-                    <Input type="textarea" placeholder="Please enter tags like 'sheet,topic,no.' eg: GFG Sheet,Linked List,1" name="tags" id="tags" value={dashboard.tags || ''}
-                        onChange={handleChange} autoComplete="tags" />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="difficulty">Difficulty</Label>
-                    <Input type="text" placeholder="Please enter difficulty in integer between [1-10]" name="difficulty" id="difficulty" value={dashboard.difficulty || ''}
-                        onChange={handleChange} autoComplete="difficulty" />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="link">Link</Label>
-                    <Input type="textarea" placeholder="Please enter link. Multiple links can be added in new line." name="link" id="link" value={dashboard.link || ''}
-                        onChange={handleChange} autoComplete="link" />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="solution">Solution</Label>
-                    <AceEditor
-                        mode="java"
-                        theme="chrome"
-                        id="solution"
-                        value={dashboard.solution || ''}
-                        onChange={data => handleChange({ target: { value: data, name: 'solution' } })}
-                        name="solution"
-                        autoComplete="solution"
-                        editorProps={{ $blockScrolling: true }}
-                        width="100%"
-                        height="320px"
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="notes">Notes</Label>
-                    <Input type="textarea" placeholder="Please enter notes." name="notes" id="notes" value={dashboard.notes || ''}
-                        onChange={handleChange} autoComplete="notes" />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="hint">Hint</Label>
-                    <Input type="textarea" placeholder="Please enter hints." name="hint" id="hint" value={dashboard.hint || ''}
-                        onChange={handleChange} autoComplete="hint" />
-                </FormGroup>
-                <FormGroup>
-                    <Button color="primary" type="submit">Save</Button>{' '}
-                    <Button color="secondary" tag={Link} to="/dashboards">Cancel</Button>
-                </FormGroup>
+                {title}
+                <hr size="4" color="grey" />
+
+                <div style={{ width: '50%', float: 'right' }}>
+                    <FormGroup>
+                        <Label for="solution">Solution</Label>
+                        <AceEditor
+                            mode="java"
+                            theme="chrome"
+                            id="solution"
+                            value={dashboard.solution || ''}
+                            onChange={data => handleChange({ target: { value: data, name: 'solution' } })}
+                            name="solution"
+                            autoComplete="solution"
+                            editorProps={{ $blockScrolling: true }}
+                            width="100%"
+                            height="590px"
+                        />
+                    </FormGroup>
+                </div>
+
+                <div style={{ width: '50%', float: 'left', paddingRight: '20px' }}>
+                    <FormGroup>
+                        <Label for="title">Title</Label>
+                        <Input type="textarea" placeholder="Please enter question's title" name="title" id="title" value={dashboard.title || ''}
+                            onChange={handleChange} autoComplete="title" />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="tags">Tags</Label>
+                        <Input type="textarea" placeholder="Please enter tags like 'sheet,topic,no.' eg: GFG Sheet,Linked List,1" name="tags" id="tags" value={dashboard.tags || ''}
+                            onChange={handleChange} autoComplete="tags" />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="difficulty">Difficulty</Label>
+                        <Input type="text" placeholder="Please enter difficulty in integer between [1-10]" name="difficulty" id="difficulty" value={dashboard.difficulty || ''}
+                            onChange={handleChange} autoComplete="difficulty" />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="link">Link</Label>
+                        <Input type="textarea" placeholder="Please enter link. Multiple links can be added in new line." name="link" id="link" value={dashboard.link || ''}
+                            onChange={handleChange} autoComplete="link" />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="notes">Notes</Label>
+                        <Input type="textarea" placeholder="Please enter notes." name="notes" id="notes" value={dashboard.notes || ''}
+                            onChange={handleChange} autoComplete="notes" />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="hint">Hint</Label>
+                        <Input type="textarea" placeholder="Please enter hints." name="hint" id="hint" value={dashboard.hint || ''}
+                            onChange={handleChange} autoComplete="hint" />
+                    </FormGroup>
+                </div>
             </Form>
         </div>
     )

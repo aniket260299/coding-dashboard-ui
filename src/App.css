@@ -22,3 +22,11 @@
     bottom: 0;
     position: fixed;
 }
+
+button {
+    background: none !important;
+    padding: none !important;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}

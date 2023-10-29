@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/theme-chrome';
+import { Table } from 'reactstrap';
 
 function ViewDashboard() {
     const { index } = useParams();
@@ -35,56 +36,85 @@ function ViewDashboard() {
         minute: '2-digit'
     };
 
+    const [hideItems, setHideItems] = useState(true);
+    const toggleHideItems = () => setHideItems(!hideItems);
+
     return (
-        <> {data &&
-            <div style={{ wordBreak: 'break-all' }}>
+        <> {data && <>
+            <>
                 <Link to="/dashboards" className="float-end"
                     style={{ textDecoration: 'none', color: 'grey' }}> [ Back ]
                 </Link>
+                <Link className="float-end" onClick={toggleHideItems}
+                    style={{ textDecoration: 'none', color: 'black' }}> [ {hideItems ? 'Show Items' : 'Hide Items'} ]
+                </Link>
                 <strong>View Dashboard</strong>
                 <hr size="4" color="grey" />
+            </>
 
-                <div><strong>Title: </strong>{data.title}</div>
-                <br></br>
+            <div style={{ width: '50%', float: 'right' }}>
+                <AceEditor
+                    mode="java"
+                    theme="chrome"
+                    value={hideItems ? 'HIDDEN' : data.solution}
+                    readOnly={true}
+                    width="100%"
+                    height="600px"
+                />
+            </div>
 
-                <div><strong> Tags: </strong>{data.tags.split(",").map(tag => <>{tag + " "}</>)}</div>
-                <br></br>
+            <div style={{ width: '50%', float: 'left', paddingRight: '20px', wordBreak: 'break-all' }}>
+                <Table height="600px">
+                    <tr>
+                        <th>Title:</th>
+                        <td>{data.title}</td>
+                    </tr>
 
-                <div><strong> Difficulty: </strong>{data.difficulty}</div>
-                <br></br>
+                    <tr>
+                        <th>Tags:</th>
+                        <td>{data.tags.split(",").map(tag => <>{tag + " "}</>)}</td>
+                    </tr>
 
-                <div><strong> Links: </strong><br></br>
-                    {data.link.split(/\r?\n/).map((link, key) =>
-                        <>
-                            <a key={key} href={link} target="_blank">{link}</a>
-                            <br></br>
-                        </>
-                    )}</div>
-                <br></br>
+                    <tr>
+                        <th>Difficulty:</th>
+                        <td>{data.difficulty}</td>
+                    </tr>
 
-                <label><strong>Solution:</strong></label>
-                <div>
-                    <AceEditor
-                        mode="java"
-                        theme="chrome"
-                        value={data.solution}
-                        readOnly={true}
-                        width="100%"
-                        height="400px"
-                    />
-                </div>
-                <br></br>
+                    <tr>
+                        <th>Links:</th>
+                        <td>
+                            {data.link.split(/\r?\n/).map((link, key) =>
+                                <>
+                                    <a style={{ textDecoration: 'none', color: '#808000' }} key={key} href={link} target="_blank">{link}</a>
+                                    <br></br>
+                                </>
+                            )}
+                        </td>
+                    </tr>
 
-                <div><strong> Notes: </strong><pre>{data.notes}</pre></div>
+                    <tr>
+                        <th>Notes:</th>
+                        <td><pre>{hideItems ? 'HIDDEN' : data.notes}</pre></td>
+                    </tr>
 
-                <div><strong> Hint: </strong><pre>{data.hint}</pre></div>
+                    <tr>
+                        <th>Hint:</th>
+                        <td><pre>{hideItems ? 'HIDDEN' : data.hint}</pre></td>
+                    </tr>
 
-                <div><strong> Date Created: </strong>{new Date(data.date_created).toLocaleString('en-US', dateFormat)}</div>
-                <br></br>
+                    <tr>
+                        <th>Date Updated:</th>
+                        <td>{new Date(data.date_updated).toLocaleString('en-US', dateFormat)}</td>
+                    </tr>
 
-                <div><strong> Date Updated: </strong>{new Date(data.date_updated).toLocaleString('en-US', dateFormat)}</div>
-                <br></br>
-            </div>}
+                    <tr>
+                        <th>Date Created:</th>
+                        <td>{new Date(data.date_created).toLocaleString('en-US', dateFormat)}</td>
+                    </tr>
+
+                </Table>
+            </div>
+        </>}
         </>
     );
 }
