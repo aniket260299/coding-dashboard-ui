@@ -64,7 +64,7 @@ function ViewDashboard() {
             </div>
 
             <div style={{ width: '50%', float: 'left', paddingRight: '20px' }}>
-                <Table height='600px'>
+                <Table height='600px' bordered>
                     <tr>
                         <th>Title:</th>
                         <td>{data.title}</td>
@@ -85,7 +85,8 @@ function ViewDashboard() {
                         <td>
                             {data.link.split(/\r?\n/).map((link) =>
                                 <>
-                                    <a style={{ textDecoration: 'none', color: '#808000' }} href={link} target="_blank">{link}</a>
+                                    <a style={{ textDecoration: 'none', color: '#808000' }}
+                                        href={link} target="_blank">{link}</a>
                                     <br></br>
                                 </>
                             )}
