@@ -71,11 +71,6 @@ function ViewDashboard() {
                     </tr>
 
                     <tr>
-                        <th>Tags:</th>
-                        <td>{data.tags.split(",").map(tag => <>{tag + " "}</>)}</td>
-                    </tr>
-
-                    <tr>
                         <th>Difficulty:</th>
                         <td>{" " + data.difficulty}</td>
                     </tr>
@@ -113,6 +108,11 @@ function ViewDashboard() {
                                     <br></br>
                                 </>
                             )}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Tags:</th>
+                        <td>{data.tags.split(",").map(tag => <>{tag + " "}</>)}</td>
                     </tr>
 
                     <tr>

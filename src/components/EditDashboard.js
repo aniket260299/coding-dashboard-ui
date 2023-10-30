@@ -112,7 +112,7 @@ const EditDashboard = () => {
                             autoComplete="solution"
                             editorProps={{ $blockScrolling: true }}
                             width="100%"
-                            height="590px"
+                            height="560px"
                         />
                     </FormGroup>
                 </div>
@@ -122,11 +122,6 @@ const EditDashboard = () => {
                         <Label for="title">Title</Label>
                         <Input type="textarea" placeholder="Please enter question's title" name="title" id="title" value={dashboard.title || ''}
                             onChange={handleChange} autoComplete="title" />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="tags">Tags</Label>
-                        <Input type="textarea" placeholder="Please enter tags like 'sheet,topic,no.' eg: GFG Sheet,Linked List,1" name="tags" id="tags" value={dashboard.tags || ''}
-                            onChange={handleChange} autoComplete="tags" />
                     </FormGroup>
                     <FormGroup>
                         <Label for="difficulty">Difficulty</Label>
@@ -147,6 +142,11 @@ const EditDashboard = () => {
                         <Label for="hint">Hint</Label>
                         <Input type="textarea" placeholder="Please enter hints." name="hint" id="hint" value={dashboard.hint || ''}
                             onChange={handleChange} autoComplete="hint" />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="tags">Tags</Label>
+                        <Input type="text" placeholder="Please enter tags like 'sheet,topic,no.' eg: GFG Sheet,Linked List,1" name="tags" id="tags" value={dashboard.tags || ''}
+                            onChange={handleChange} autoComplete="tags" />
                     </FormGroup>
                 </div>
             </Form>
