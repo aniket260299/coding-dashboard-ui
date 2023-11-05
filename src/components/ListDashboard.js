@@ -45,19 +45,30 @@ function ListDashboard() {
         }
     }
 
+    const findIndexFromId = (id) => {
+        const list = JSON.parse(localStorage.getItem("dashboardList"));
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].id == id) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
     const Action = (data) => {
         return <>
-            <Link to={"/dashboard/view/" + data.node.rowIndex}
+            <Link to={"/dashboard/view/" + findIndexFromId(data.data.id)}
                 style={{ textDecoration: 'none', color: '#7B5800' }}> [ View ]
             </Link>
-            <Link to={"/dashboard/edit/" + data.node.rowIndex}
+            <Link to={"/dashboard/edit/" + findIndexFromId(data.data.id)}
                 style={{ textDecoration: 'none', color: '#F5B000', marginLeft: '10px' }}> [ Edit ]
             </Link>
-            <Link onClick={() => remove(data.node.rowIndex)}
+            <Link onClick={() => remove(findIndexFromId(data.data.id))}
                 style={{ textDecoration: 'none', color: '#F55500', marginLeft: '10px' }}> [ Delete ]
             </Link>
         </>
     }
+
 
     const columnDefs = useMemo(() => ([
         { field: 'title', resizable: true, flex: 3 },
