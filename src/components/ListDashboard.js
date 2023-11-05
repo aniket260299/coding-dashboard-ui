@@ -82,7 +82,7 @@ function ListDashboard() {
                 const A = valueA.split(' ');
                 const B = valueB.split(' ');
                 if (A.length === B.length && A.length === 3 && A[0] === B[0] && A[1] === B[1]) {
-                    return Number(A[2] - B[2]);
+                    return Number(A[2]) - Number(B[2]);
                 } else {
                     return (A > B) ? 1 : -1;
                 }
