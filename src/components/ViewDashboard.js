@@ -40,95 +40,96 @@ function ViewDashboard() {
     const toggleHideItems = () => setHideItems(!hideItems);
 
     return (
-        <> {data && <>
-            <>
-                <Link to="/dashboards" className="float-end"
-                    style={{ textDecoration: 'none', color: 'grey' }}> [ Back ]
-                </Link>
-                <Link className="float-end" onClick={toggleHideItems}
-                    style={{ textDecoration: 'none', color: 'black' }}> [ {hideItems ? 'Show Items' : 'Hide Items'} ]
-                </Link>
-                <strong>View Dashboard</strong>
-                <hr size="4" color="grey" />
-            </>
+        <div key="view-root">
+            {data && <>
+                <>
+                    <Link to="/dashboards" className="float-end"
+                        style={{ textDecoration: 'none', color: 'grey' }}> [ Back ]
+                    </Link>
+                    <Link className="float-end" onClick={toggleHideItems}
+                        style={{ textDecoration: 'none', color: 'black' }}> [ {hideItems ? 'Show Items' : 'Hide Items'} ]
+                    </Link>
+                    <strong>View Dashboard</strong>
+                    <hr size="4" color="grey" />
+                </>
 
-            <div style={{ width: '50%', float: 'right' }}>
-                <AceEditor
-                    mode="java"
-                    theme="chrome"
-                    value={hideItems ? 'HIDDEN' : data.solution}
-                    readOnly={true}
-                    width="100%"
-                    height="600px"
-                />
-            </div>
+                <div style={{ width: '50%', float: 'right' }}>
+                    <AceEditor
+                        mode="java"
+                        theme="chrome"
+                        value={hideItems ? 'HIDDEN' : data.solution}
+                        readOnly={true}
+                        width="100%"
+                        height="600px"
+                    />
+                </div>
 
-            <div style={{ width: '50%', float: 'left', paddingRight: '20px' }}>
-                <Table height='600px' bordered>
-                    <tr>
-                        <th>Title:</th>
-                        <td>{data.title}</td>
-                    </tr>
+                <div style={{ width: '50%', float: 'left', paddingRight: '20px' }}>
+                    <Table height='600px' bordered>
+                        <tr>
+                            <th>Title:</th>
+                            <td>{data.title}</td>
+                        </tr>
 
-                    <tr>
-                        <th>Difficulty:</th>
-                        <td>{" " + data.difficulty}</td>
-                    </tr>
+                        <tr>
+                            <th>Difficulty:</th>
+                            <td>{" " + data.difficulty}</td>
+                        </tr>
 
-                    <tr>
-                        <th>Links:</th>
-                        <td>
-                            {data.link.split(/\r?\n/).map((link) =>
-                                <>
-                                    <a style={{ textDecoration: 'none', color: '#808000' }}
-                                        href={link} target="_blank">{link}</a>
-                                    <br></br>
-                                </>
-                            )}
-                        </td>
-                    </tr>
+                        <tr>
+                            <th>Links:</th>
+                            <td>
+                                {data.link.split(/\r?\n/).map((link) =>
+                                    <>
+                                        <a style={{ textDecoration: 'none', color: '#808000' }}
+                                            href={link} target="_blank">{link}</a>
+                                        <br></br>
+                                    </>
+                                )}
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <th>Notes:</th>
-                        <td>
-                            {hideItems ? 'HIDDEN' : data.notes.split(/\r?\n/).map((note) =>
-                                <>
-                                    {note}
-                                    <br></br>
-                                </>
-                            )}</td>
-                    </tr>
+                        <tr>
+                            <th>Notes:</th>
+                            <td>
+                                {hideItems ? 'HIDDEN' : data.notes.split(/\r?\n/).map((note) =>
+                                    <>
+                                        {note}
+                                        <br></br>
+                                    </>
+                                )}</td>
+                        </tr>
 
-                    <tr>
-                        <th>Hint:</th>
-                        <td>
-                            {hideItems ? 'HIDDEN' : data.hint.split(/\r?\n/).map((hint) =>
-                                <>
-                                    {hint}
-                                    <br></br>
-                                </>
-                            )}</td>
-                    </tr>
+                        <tr>
+                            <th>Hint:</th>
+                            <td>
+                                {hideItems ? 'HIDDEN' : data.hint.split(/\r?\n/).map((hint) =>
+                                    <>
+                                        {hint}
+                                        <br></br>
+                                    </>
+                                )}</td>
+                        </tr>
 
-                    <tr>
-                        <th>Tags:</th>
-                        <td>{data.tags.split(",").map(tag => <>{tag + " "}</>)}</td>
-                    </tr>
+                        <tr>
+                            <th>Tags:</th>
+                            <td>{data.tags.split(",").map(tag => <>{tag + " "}</>)}</td>
+                        </tr>
 
-                    <tr>
-                        <th>Date Updated:</th>
-                        <td>{new Date(data.date_updated).toLocaleString('en-US', dateFormat)}</td>
-                    </tr>
+                        <tr>
+                            <th>Date Updated:</th>
+                            <td>{new Date(data.date_updated).toLocaleString('en-US', dateFormat)}</td>
+                        </tr>
 
-                    <tr>
-                        <th>Date Created:</th>
-                        <td>{new Date(data.date_created).toLocaleString('en-US', dateFormat)}</td>
-                    </tr>
+                        <tr>
+                            <th>Date Created:</th>
+                            <td>{new Date(data.date_created).toLocaleString('en-US', dateFormat)}</td>
+                        </tr>
 
-                </Table>
-            </div>
-        </>}
-        </>
+                    </Table>
+                </div>
+            </>}
+        </div>
     );
 }
 
