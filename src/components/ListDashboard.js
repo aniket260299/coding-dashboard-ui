@@ -69,6 +69,28 @@ function ListDashboard() {
         </>
     }
 
+    const exportList = () => {
+        const file = new Blob([localStorage.getItem("dashboardList")], { type: 'text/plain' });
+        const element = document.createElement("a");
+        element.href = window.URL.createObjectURL(file);
+        element.download = "dashboardList.txt";
+        document.body.appendChild(element);
+        element.click();
+    }
+
+    const inputFile = useRef(null);
+
+    const handleFileUpload = (event) => {
+        const file = event.target.files && event.target.files[0];
+        file.text().then(result => {
+            DashboardService.importDashboard(JSON.parse(result), token).then(response => {
+                console.log(response);
+            })
+        })
+    };
+    const importList = () => {
+        inputFile.current.click();
+    };
 
     const columnDefs = useMemo(() => ([
         { field: 'title', resizable: true, flex: 3 },
@@ -138,6 +160,18 @@ function ListDashboard() {
                 <>
                     <Link to="/dashboard/edit/-1" className="float-end"
                         style={{ textDecoration: 'none', color: 'grey' }}> [ Add Record ]
+                    </Link>
+                    <Link onClick={exportList} className="float-end"
+                        style={{ textDecoration: 'none', color: 'black' }}> [ Export ]
+                    </Link>
+                    <input
+                        style={{ display: "none" }}
+                        ref={inputFile}
+                        onChange={handleFileUpload}
+                        type="file"
+                    />
+                    <Link onClick={importList} className="float-end"
+                        style={{ textDecoration: 'none', color: 'black' }}> [ Import ]
                     </Link>
                     <strong>Dashboard List</strong>
                     <hr size="4" color="grey" />

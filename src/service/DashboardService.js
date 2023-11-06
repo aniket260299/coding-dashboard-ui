@@ -20,6 +20,10 @@ class DashboardService {
         return axios.post(CODING_DASHBOARD_URL, dashboard, this.getConfig(token));
     }
 
+    importDashboard(dashboardList, token) {
+        return axios.post(CODING_DASHBOARD_URL + '/import', dashboardList, this.getConfig(token));
+    }
+
     getDashboardById(id, token) {
         return axios.get(CODING_DASHBOARD_URL + '/' + id, this.getConfig(token));
     }
