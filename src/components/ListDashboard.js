@@ -83,8 +83,12 @@ function ListDashboard() {
     const handleFileUpload = (event) => {
         const file = event.target.files && event.target.files[0];
         file.text().then(result => {
-            DashboardService.importDashboard(JSON.parse(result), token).then(response => {
-                console.log(response);
+            const importedList = JSON.parse(result);
+            DashboardService.importDashboard(importedList, token).then(response => {
+                let localList = JSON.parse(localStorage.getItem("dashboardList")) || [];
+                localList = localList.concat(importedList);
+                localStorage.setItem("dashboardList", JSON.stringify(localList));
+                setdashboards(localList);
             })
         })
     };
@@ -103,8 +107,9 @@ function ListDashboard() {
             comparator: (valueA, valueB, nodeA, nodeB, isDescending) => {
                 const A = valueA.split(' ');
                 const B = valueB.split(' ');
-                if (A.length === B.length && A.length === 3 && A[0] === B[0] && A[1] === B[1]) {
-                    return Number(A[2]) - Number(B[2]);
+                if (A.length === B.length) {
+                    const n = A.length;
+                    return Number(A[n - 1]) - Number(B[n - 1]);
                 } else {
                     return (A > B) ? 1 : -1;
                 }
