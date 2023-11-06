@@ -73,11 +73,6 @@ function ViewDashboard() {
                             </tr>
 
                             <tr>
-                                <th>Difficulty:</th>
-                                <td>{" " + data.difficulty}</td>
-                            </tr>
-
-                            <tr>
                                 <th>Links:</th>
                                 <td>
                                     {data.link.split(/\r?\n/).map((link) =>
@@ -88,17 +83,6 @@ function ViewDashboard() {
                                         </>
                                     )}
                                 </td>
-                            </tr>
-
-                            <tr>
-                                <th>Notes:</th>
-                                <td>
-                                    {hideItems ? 'HIDDEN' : data.notes.split(/\r?\n/).map((note) =>
-                                        <>
-                                            {note}
-                                            <br></br>
-                                        </>
-                                    )}</td>
                             </tr>
 
                             <tr>
@@ -113,18 +97,14 @@ function ViewDashboard() {
                             </tr>
 
                             <tr>
-                                <th>Tags:</th>
-                                <td>{data.tags.split(",").map(tag => <>{tag + " "}</>)}</td>
-                            </tr>
-
-                            <tr>
-                                <th>Date Updated:</th>
-                                <td>{new Date(data.date_updated).toLocaleString('en-US', dateFormat)}</td>
-                            </tr>
-
-                            <tr>
-                                <th>Date Created:</th>
-                                <td>{new Date(data.date_created).toLocaleString('en-US', dateFormat)}</td>
+                                <th>Notes:</th>
+                                <td>
+                                    {hideItems ? 'HIDDEN' : data.notes.split(/\r?\n/).map((note) =>
+                                        <>
+                                            {note}
+                                            <br></br>
+                                        </>
+                                    )}</td>
                             </tr>
                         </tbody>
                     </Table>
