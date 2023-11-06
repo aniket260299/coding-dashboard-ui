@@ -55,16 +55,45 @@ function ListDashboard() {
         return 0;
     }
 
+    const Title = (item) => {
+        return (
+            <a style={{ textDecoration: 'none', color: '#36454F' }}
+                href={item.data.link.split(/\r?\n/)[0]} target="_blank">{item.data.title}</a>
+        );
+
+    }
+
+    const Difficulty = (item) => {
+        const level = item.data.difficulty;
+        let difficulty, color;
+        if (level === 1) {
+            difficulty = 'Easy';
+            color = 'green';
+        }
+        else if (level === 2) {
+            difficulty = 'Medium';
+            color = 'orange';
+        }
+        else {
+            difficulty = 'Hard'
+            color = 'red'
+        }
+
+        return <>
+            <p style={{ color: color }}>{difficulty}</p >
+        </>
+    }
+
     const Action = (data) => {
         return <>
             <Link to={"/dashboard/view/" + findIndexFromId(data.data.id)}
-                style={{ textDecoration: 'none', color: '#7B5800' }}> [ View ]
+                style={{ textDecoration: 'none', color: '#191970' }}> [ View ]
             </Link>
             <Link to={"/dashboard/edit/" + findIndexFromId(data.data.id)}
-                style={{ textDecoration: 'none', color: '#F5B000', marginLeft: '10px' }}> [ Edit ]
+                style={{ textDecoration: 'none', color: 'black', marginLeft: '10px' }}> [ Edit ]
             </Link>
             <Link onClick={() => remove(findIndexFromId(data.data.id))}
-                style={{ textDecoration: 'none', color: '#F55500', marginLeft: '10px' }}> [ Delete ]
+                style={{ textDecoration: 'none', color: 'red', marginLeft: '10px' }}> [ Delete ]
             </Link>
         </>
     }
@@ -97,7 +126,12 @@ function ListDashboard() {
     };
 
     const columnDefs = useMemo(() => ([
-        { field: 'title', resizable: true, flex: 3 },
+        { headerName: 'Title', cellRenderer: Title, resizable: true, flex: 3 },
+        {
+            headerName: 'Difficulty',
+            cellRenderer: Difficulty,
+            width: 50, maxWidth: 100, minWidth: 100
+        },
         {
             headerName: 'Tags',
             valueGetter: p => {
@@ -133,7 +167,6 @@ function ListDashboard() {
             sort: 'asc',
             flex: 1
         },
-        { headerName: 'Level', field: 'difficulty', width: 100, maxWidth: 100, minWidth: 100 },
         { headerName: 'Action', cellRenderer: Action, width: 250, maxWidth: 230, minWidth: 230 }
     ]), []);
 
@@ -173,10 +206,10 @@ function ListDashboard() {
             {loading ? <div className="loading-spinner"></div> :
                 <>
                     <Link to="/dashboard/edit/-1" className="float-end"
-                        style={{ textDecoration: 'none', color: 'grey' }}> [ Add Record ]
+                        style={{ textDecoration: 'none', color: 'black' }}> [ Add Record ]
                     </Link>
                     <Link onClick={exportList} className="float-end"
-                        style={{ textDecoration: 'none', color: 'black' }}> [ Export ]
+                        style={{ textDecoration: 'none', color: 'grey' }}> [ Export ]
                     </Link>
                     <input
                         style={{ display: "none" }}
@@ -185,7 +218,7 @@ function ListDashboard() {
                         type="file"
                     />
                     <Link onClick={importList} className="float-end"
-                        style={{ textDecoration: 'none', color: 'black' }}> [ Import ]
+                        style={{ textDecoration: 'none', color: 'grey' }}> [ Import ]
                     </Link>
                     <strong>Dashboard List</strong>
                     <hr size="4" color="grey" />

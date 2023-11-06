@@ -53,8 +53,8 @@ const EditDashboard = () => {
     }
 
     const validateForm = () => {
-        if (isNaN(dashboard.difficulty) || dashboard.difficulty < 1 || dashboard.difficulty > 10) {
-            alert('Please enter difficulty in integer between [1-10]');
+        if (isNaN(dashboard.difficulty) || dashboard.difficulty < 1 || dashboard.difficulty > 3) {
+            alert('Please enter difficulty in integer between [1-3]');
             setDashboard({ ...dashboard, difficulty: '' });
             return false;
         }
@@ -125,7 +125,7 @@ const EditDashboard = () => {
                     </FormGroup>
                     <FormGroup>
                         <Label for="difficulty">Difficulty</Label>
-                        <Input type="text" placeholder="Please enter difficulty in integer between [1-10]" name="difficulty" id="difficulty" value={dashboard.difficulty || ''}
+                        <Input type="text" placeholder="Please enter difficulty in integer between [1-3]" name="difficulty" id="difficulty" value={dashboard.difficulty || ''}
                             onChange={handleChange} autoComplete="difficulty" />
                     </FormGroup>
                     <FormGroup>
