@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
@@ -27,17 +27,16 @@ function ViewDashboard() {
         return false;
     }
 
-    const dateFormat = {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'short',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-    };
+    const getColorByDifficulty = () => {
+        const level = data.difficulty;
+        let color;
 
-    const [hideItems, setHideItems] = useState(true);
-    const toggleHideItems = () => setHideItems(!hideItems);
+        if (level === 1) color = 'green';
+        else if (level === 2) color = 'orange';
+        else color = 'red'
+
+        return color;
+    }
 
     return (
         <>
@@ -45,9 +44,6 @@ function ViewDashboard() {
                 <>
                     <Link to="/dashboards" className="float-end"
                         style={{ textDecoration: 'none', color: 'grey' }}> [ Back ]
-                    </Link>
-                    <Link className="float-end" onClick={toggleHideItems}
-                        style={{ textDecoration: 'none', color: 'black' }}> [ {hideItems ? 'Show Items' : 'Hide Items'} ]
                     </Link>
                     <strong>View Dashboard</strong>
                     <hr size="4" color="grey" />
@@ -57,7 +53,7 @@ function ViewDashboard() {
                     <AceEditor
                         mode="java"
                         theme="chrome"
-                        value={hideItems ? 'HIDDEN' : data.solution}
+                        value={data.solution}
                         readOnly={true}
                         width="100%"
                         height="600px"
@@ -68,18 +64,17 @@ function ViewDashboard() {
                     <Table height='600px' bordered>
                         <tbody>
                             <tr>
-                                <th>Title:</th>
+                                <th><p style={{ color: getColorByDifficulty() }}>Title:</p></th>
                                 <td>{data.title}</td>
                             </tr>
 
                             <tr>
                                 <th>Links:</th>
                                 <td>
-                                    {data.link.split(/\r?\n/).map((link) =>
+                                    {data.link.split(/\r?\n/).map((link, index) =>
                                         <>
                                             <a style={{ textDecoration: 'none', color: '#808000' }}
-                                                href={link} target="_blank">{link}</a>
-                                            <br></br>
+                                                href={link} target="_blank">{'Link' + (index + 1) + ' '}</a>
                                         </>
                                     )}
                                 </td>
@@ -88,7 +83,7 @@ function ViewDashboard() {
                             <tr>
                                 <th>Hint:</th>
                                 <td>
-                                    {hideItems ? 'HIDDEN' : data.hint.split(/\r?\n/).map((hint) =>
+                                    {data.hint.split(/\r?\n/).map((hint) =>
                                         <>
                                             {hint}
                                             <br></br>
@@ -99,7 +94,7 @@ function ViewDashboard() {
                             <tr>
                                 <th>Notes:</th>
                                 <td>
-                                    {hideItems ? 'HIDDEN' : data.notes.split(/\r?\n/).map((note) =>
+                                    {data.notes.split(/\r?\n/).map((note) =>
                                         <>
                                             {note}
                                             <br></br>
