@@ -107,12 +107,22 @@ function ListDashboard() {
             comparator: (valueA, valueB, nodeA, nodeB, isDescending) => {
                 const A = valueA.split(' ');
                 const B = valueB.split(' ');
+                let result = A > B ? 1 : -1;
+
                 if (A.length === B.length) {
                     const n = A.length;
-                    return Number(A[n - 1]) - Number(B[n - 1]);
-                } else {
-                    return (A > B) ? 1 : -1;
+                    let sameTag = true;
+                    for (let i = 0; i < n - 1; i++) {
+                        if (A[i] !== B[i]) {
+                            sameTag = false;
+                            break;
+                        }
+                    }
+                    if (sameTag) {
+                        result = Number(A[n - 1]) - Number(B[n - 1]);
+                    }
                 }
+                return result;
             },
 
             filter: 'agTextColumnFilter',
@@ -120,7 +130,7 @@ function ListDashboard() {
                 debounceMs: 0,
                 buttons: ['clear']
             },
-            resizable: true,
+            sort: 'asc',
             flex: 1
         },
         { headerName: 'Level', field: 'difficulty', width: 100, maxWidth: 100, minWidth: 100 },
@@ -128,8 +138,7 @@ function ListDashboard() {
     ]), []);
 
     const defaultColDef = useMemo(() => ({
-        sortable: true,
-        suppressMovable: true,
+        suppressMovable: true
     }), []);
 
     const gridRef = useRef();
