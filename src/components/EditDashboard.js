@@ -31,22 +31,12 @@ const EditDashboard = () => {
     let token = localStorage.getItem("jwt-token");
 
     useEffect(() => {
-        if (authenticated()) {
+        if (Utils.authenticated()) {
             index === '-1' ? setDashboard(initialFormState) : setDashboard(dashboardList[index]);
         } else {
             navigate("/auth");
         }
     }, []);
-
-    const authenticated = () => {
-        if (token) {
-            const now = new Date();
-            const expiry = new Date(Number(localStorage.getItem("jwt-token-expiry")));
-            if (expiry > now) return true;
-        }
-        localStorage.clear();
-        return false;
-    }
 
     const handleChange = (event) => {
         const { name, value } = event.target

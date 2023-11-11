@@ -4,6 +4,7 @@ import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/theme-chrome';
 import { Table } from 'reactstrap';
+import Utils from './Utils';
 
 function ViewDashboard() {
     const { index } = useParams();
@@ -12,20 +13,10 @@ function ViewDashboard() {
     let data = JSON.parse(localStorage.getItem("dashboardList"))[index];
 
     useEffect(() => {
-        if (!authenticated()) {
+        if (!Utils.authenticated()) {
             navigate("/auth");
         }
     }, []);
-
-    const authenticated = () => {
-        if (token) {
-            const now = new Date();
-            const expiry = new Date(Number(localStorage.getItem("jwt-token-expiry")));
-            if (expiry > now) return true;
-        }
-        localStorage.clear();
-        return false;
-    }
 
     const getColorByDifficulty = () => {
         const level = data.difficulty;

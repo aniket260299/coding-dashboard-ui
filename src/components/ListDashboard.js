@@ -4,6 +4,7 @@ import DashboardService from '../service/DashboardService';
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import Utils from './Utils';
 
 function ListDashboard() {
     const [dashboards, setdashboards] = useState([]);
@@ -11,18 +12,8 @@ function ListDashboard() {
     const navigate = useNavigate();
     let token = localStorage.getItem("jwt-token");
 
-    const authenticated = () => {
-        if (token) {
-            const now = new Date();
-            const expiry = new Date(Number(localStorage.getItem("jwt-token-expiry")));
-            if (expiry > now) return true;
-        }
-        localStorage.clear();
-        return false;
-    }
-
     useEffect(() => {
-        if (authenticated()) {
+        if (Utils.authenticated()) {
             setdashboards(JSON.parse(localStorage.getItem("dashboardList")));
         } else {
             navigate("/auth");

@@ -7,6 +7,7 @@ import ViewDashboard from './components/ViewDashboard';
 import DashboardService from './service/DashboardService';
 import Auth from './components/Auth';
 import './App.css'
+import Utils from './components/Utils';
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
 
   useEffect(() => {
     jwtToken = localStorage.getItem("jwt-token");
-    if (authenticated()) {
+    if (Utils.authenticated()) {
       setLoading(true);
       DashboardService.getAllDashboard(jwtToken)
         .then(response => {
@@ -27,16 +28,6 @@ function App() {
       navigate("/auth");
     }
   }, []);
-
-  const authenticated = () => {
-    if (jwtToken) {
-      const now = new Date();
-      const expiry = new Date(Number(localStorage.getItem("jwt-token-expiry")));
-      if (expiry > now) return true;
-    }
-    localStorage.clear();
-    return false;
-  }
 
   if (loading) {
     return (

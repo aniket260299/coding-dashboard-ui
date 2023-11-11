@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import Utils from './Utils';
 import { Navbar, NavbarBrand } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -7,20 +8,10 @@ function Header() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!authenticated()) {
+        if (!Utils.authenticated()) {
             navigate("/auth");
         }
     }, []);
-
-    const authenticated = () => {
-        if (token) {
-            const now = new Date();
-            const expiry = new Date(Number(localStorage.getItem("jwt-token-expiry")));
-            if (expiry > now) return true;
-        }
-        localStorage.clear();
-        return false;
-    }
 
     const handleLogout = () => {
         localStorage.clear();
