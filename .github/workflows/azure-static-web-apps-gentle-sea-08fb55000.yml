@@ -1,4 +1,6 @@
-name: Azure Static Web Apps CI/CD
+name: codingdashboard
+env:
+  CI: false
 
 on:
   push:
