@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Form, FormGroup, Input, Label } from 'reactstrap';
 import DashboardService from '../service/DashboardService';
+import Utils from './Utils';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/theme-chrome';
@@ -12,10 +13,10 @@ const EditDashboard = () => {
         title: '',
         solution: '',
         hint: '',
-        notes: '',
+        notes: Utils.getRevisionNotes(),
         link: '',
         difficulty: '',
-        tags: '',
+        tags: Utils.getTags(),
         date_created: '',
         date_updated: '',
         username: localStorage.getItem("username")
