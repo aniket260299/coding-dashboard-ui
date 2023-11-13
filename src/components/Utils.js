@@ -14,7 +14,7 @@ class Utils {
         const month = today.getMonth() + 1;
         const year = today.getFullYear();
         const date = today.getDate();
-        return 'Revision Dates: ' + month + "/" + date + "/" + year + '\nLast Revision Notes:';
+        return 'Revision Dates: ' + date + "/" + month + "/" + year + '\nLast Revision Notes:';
     };
 
     getTags = () => {
