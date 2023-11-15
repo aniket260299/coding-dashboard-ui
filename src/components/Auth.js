@@ -54,8 +54,17 @@ const Auth = () => {
 
             setLoading(true);
             const isAlive = await Utils.isAlive();
+            let response;
             if (isAlive) {
-                const response = isSignIn ? await AuthService.signIn(authData) : await AuthService.signUp(authData);
+                try {
+                    response = isSignIn ? await AuthService.signIn(authData) : await AuthService.signUp(authData);
+                } catch {
+                    console.log("error while sign/sign-up");
+                    setLoading(false);
+                }
+            }
+
+            if (response?.data?.length > 0) {
                 if (isSignIn) {
                     localStorage.setItem("jwt-token", response.data);
                     localStorage.setItem("username", formData.username);
@@ -70,10 +79,10 @@ const Auth = () => {
                     setLoading(false);
                     changeAuthMode();
                 }
-                setLoading(false);
             }
+            setLoading(false);
         }
-    };
+    }
 
     if (loading) {
         return (
