@@ -9,7 +9,6 @@ import Utils from './Utils';
 function ViewDashboard() {
     const { index } = useParams();
     const navigate = useNavigate();
-    let token = localStorage.getItem("jwt-token");
     let data = JSON.parse(localStorage.getItem("dashboardList"))[index];
 
     useEffect(() => {

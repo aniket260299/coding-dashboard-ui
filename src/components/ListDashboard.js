@@ -27,12 +27,14 @@ function ListDashboard() {
             let list = JSON.parse(localStorage.getItem("dashboardList"));
             const id = list[index].id;
             setLoading(true);
-            await DashboardService.deleteDashboard(id, token).then(() => {
+            const isAlive = await Utils.isAlive();
+            if (isAlive) {
+                await DashboardService.deleteDashboard(id, token);
                 list.splice(index, 1);
                 localStorage.setItem("dashboardList", JSON.stringify(list));
                 setdashboards(list);
-                setLoading(false);
-            });
+            }
+            setLoading(false);
         }
     }
 
@@ -100,18 +102,19 @@ function ListDashboard() {
 
     const inputFile = useRef(null);
 
-    const handleFileUpload = (event) => {
+    const handleFileUpload = async (event) => {
         const file = event.target.files && event.target.files[0];
-        file.text().then(result => {
-            const importedList = JSON.parse(result);
-            DashboardService.importDashboard(importedList, token).then(response => {
-                let localList = JSON.parse(localStorage.getItem("dashboardList")) || [];
-                localList = localList.concat(importedList);
-                localStorage.setItem("dashboardList", JSON.stringify(localList));
-                setdashboards(localList);
-            })
-        })
-    };
+        setLoading(true);
+        const text = await file.text();
+        const importedList = JSON.parse(text);
+        const response = await DashboardService.importDashboard(importedList, token);
+
+        if (response.data === 'imported successfully') {
+            const dbList = await Utils.fetchDashboardList();
+            setdashboards(dbList);
+        }
+        setLoading(false);
+    }
     const importList = () => {
         inputFile.current.click();
     };

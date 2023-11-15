@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import AuthService from "../service/AuthService";
-import DashboardService from "../service/DashboardService";
+import Utils from "./Utils";
 
 const Auth = () => {
     const [authMode, setAuthMode] = useState("signin");
@@ -51,22 +51,26 @@ const Auth = () => {
                 username: formData.username,
                 password: formData.password
             };
-            const response = await (isSignIn ? AuthService.signIn(authData) : AuthService.signUp(authData));
 
-            if (isSignIn) {
-                localStorage.setItem("jwt-token", response.data);
-                localStorage.setItem("username", formData.username);
-                const now = new Date();
-                localStorage.setItem("jwt-token-expiry", now.setHours(now.getHours() + 23));
-                setLoading(true);
-                await DashboardService.getAllDashboard(response.data)
-                    .then(response1 => {
-                        localStorage.setItem("dashboardList", JSON.stringify(response1.data));
-                        setLoading(false);
-                    });
-                navigate(from);
-            } else {
-                changeAuthMode();
+            setLoading(true);
+            const isAlive = await Utils.isAlive();
+            if (isAlive) {
+                const response = isSignIn ? await AuthService.signIn(authData) : await AuthService.signUp(authData);
+                if (isSignIn) {
+                    localStorage.setItem("jwt-token", response.data);
+                    localStorage.setItem("username", formData.username);
+
+                    const now = new Date();
+                    localStorage.setItem("jwt-token-expiry", now.setHours(now.getHours() + 23));
+
+                    await Utils.fetchDashboardList();
+                    setLoading(false);
+                    navigate(from);
+                } else {
+                    setLoading(false);
+                    changeAuthMode();
+                }
+                setLoading(false);
             }
         }
     };

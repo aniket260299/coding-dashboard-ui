@@ -1,7 +1,7 @@
 import axios from 'axios';
-const liveUrl = process.env.REACT_APP_CODING_DASHBOARD_LIVE_URL;
+const liveUrl = process.env.REACT_APP_CODING_DASHBOARD_LIVE_URL || "http://localhost:8080";
 const path = "/api/auth/"
-const URL = liveUrl ? liveUrl + path : "http://localhost:8080" + path;
+const URL = liveUrl + path;
 
 class AuthService {
     signIn = (data) => {
@@ -10,6 +10,10 @@ class AuthService {
 
     signUp = (data) => {
         return axios.post(URL + "sign-up", data);
+    }
+
+    isAlive = () => {
+        return axios.get(liveUrl);
     }
 };
 

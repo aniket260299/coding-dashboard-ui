@@ -1,3 +1,6 @@
+import AuthService from "../service/AuthService";
+import DashboardService from "../service/DashboardService";
+
 class Utils {
     authenticated = () => {
         if (localStorage.getItem("jwt-token")) {
@@ -8,6 +11,22 @@ class Utils {
         localStorage.clear();
         return false;
     };
+
+    fetchDashboardList = async () => {
+        const isAlive = await this.isAlive();
+        if (this.authenticated() && isAlive) {
+            const response = await DashboardService.getAllDashboard(localStorage.getItem("jwt-token"));
+            if (response?.data) {
+                localStorage.setItem("dashboardList", JSON.stringify(response.data));
+                return response.data;
+            }
+        }
+    }
+
+    isAlive = async () => {
+        const response = await AuthService.isAlive();
+        return response?.data || false;
+    }
 
     getRevisionNotes = () => {
         const today = new Date();

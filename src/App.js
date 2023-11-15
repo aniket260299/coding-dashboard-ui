@@ -4,29 +4,19 @@ import Header from './components/Header';
 import ListDashboard from './components/ListDashboard';
 import EditDashboard from './components/EditDashboard';
 import ViewDashboard from './components/ViewDashboard';
-import DashboardService from './service/DashboardService';
 import Auth from './components/Auth';
 import './App.css'
 import Utils from './components/Utils';
 
 
 function App() {
-  let jwtToken = localStorage.getItem("jwt-token");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    jwtToken = localStorage.getItem("jwt-token");
-    if (Utils.authenticated()) {
-      setLoading(true);
-      DashboardService.getAllDashboard(jwtToken)
-        .then(response => {
-          localStorage.setItem("dashboardList", JSON.stringify(response.data));
-          setLoading(false);
-        });
-    } else {
-      navigate("/auth");
-    }
+    setLoading(true);
+    Utils.fetchDashboardList().then(() => {
+      setLoading(false);
+    })
   }, []);
 
   if (loading) {

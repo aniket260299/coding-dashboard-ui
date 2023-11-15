@@ -49,28 +49,31 @@ const EditDashboard = () => {
             alert('Please enter difficulty in integer between [1-3]');
             setDashboard({ ...dashboard, difficulty: '' });
             return false;
-        } else if (tags.length != 3 || isNaN(tags[2]) || tags[2] <= 0) {
-            alert('Please enter tags like "sheet,topic,no." and no. > 0');
+        } else if (tags.length != 3 || isNaN(tags[2]) || tags[2] <= 0 || tags[2] <= 3) {
+            alert('Please enter tags like "sheet,topic,no." and 1 <= no. >= 3');
             return false;
         }
         return true;
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (validateForm()) {
             let currentTime = new Date().getTime();
             dashboard.date_updated = currentTime;
             dashboard.id ? dashboard.date_updated = currentTime : dashboard.date_created = currentTime;
-            const response = dashboard.id ? DashboardService.updateDashboard(dashboard, token) : DashboardService.addDashboard(dashboard, token);
+
             setLoading(true);
-            response.then(result => {
+            const isAlive = await Utils.isAlive();
+            if (isAlive) {
+                const response = dashboard.id ? await DashboardService.updateDashboard(dashboard, token) : await DashboardService.addDashboard(dashboard, token);
                 setDashboard(initialFormState);
-                index === "-1" ? dashboardList.push(result.data) : dashboardList[index] = result.data;
+                index === "-1" ? dashboardList.push(response.data) : dashboardList[index] = response.data;
                 localStorage.setItem("dashboardList", JSON.stringify(dashboardList));
                 setLoading(false);
-                navigate('/dashboards/');
-            });
+                navigate('/dashboards');
+            }
+            setLoading(false);
         }
     }
 
