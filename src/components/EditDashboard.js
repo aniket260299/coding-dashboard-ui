@@ -49,8 +49,8 @@ const EditDashboard = () => {
             alert('Please enter difficulty in integer between [1-3]');
             setDashboard({ ...dashboard, difficulty: '' });
             return false;
-        } else if (tags.length != 3 || isNaN(tags[2]) || tags[2] <= 0 || tags[2] <= 3) {
-            alert('Please enter tags like "sheet,topic,no." and 1 <= no. >= 3');
+        } else if (tags.length != 3 || isNaN(tags[2]) || tags[2] <= 0) {
+            alert('Please enter tags like "sheet,topic,no." and no >= 1');
             return false;
         }
         return true;
