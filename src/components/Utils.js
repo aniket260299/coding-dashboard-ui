@@ -23,6 +23,15 @@ class Utils {
         }
     }
 
+    findIndexFromId = (id, list) => {
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].id === id) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
     isAlive = async () => {
         const response = await AuthService.isAlive();
         return response?.data || false;

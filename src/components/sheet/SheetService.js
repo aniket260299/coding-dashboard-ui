@@ -14,4 +14,16 @@ export default class SheetService {
     getSheetsByUserName() {
         return axios.get(URL + "/user/" + username, this.authorizationHeader());
     }
+
+    addSheet(sheet) {
+        return axios.post(URL, sheet, this.authorizationHeader());
+    }
+
+    updateSheet(sheet) {
+        return axios.put(URL, sheet, this.authorizationHeader());
+    }
+
+    deleteSheet(id) {
+        return axios.delete(URL + "/" + id, this.authorizationHeader());
+    }
 }
