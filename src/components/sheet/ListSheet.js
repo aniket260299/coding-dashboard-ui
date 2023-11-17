@@ -4,7 +4,7 @@ import SheetService from "./SheetService";
 import Utils from "../Utils";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import "ag-grid-community/styles/ag-theme-material.css";
 
 const ListSheet = () => {
     const [rowData, setRowData] = useState([]);
@@ -101,7 +101,7 @@ const ListSheet = () => {
     const gridOptions = {
         columnDefs: [
             { headerName: '#', field: 'position', sort: 'asc' },
-            { field: 'sheet' },
+            { field: 'sheet', flex: 1 },
             {
                 headerName: 'Action',
                 cellRenderer: Action,
@@ -113,7 +113,6 @@ const ListSheet = () => {
             suppressMovable: true,
             resizable: true,
             editable: true,
-            flex: 1,
         }
     }
 
@@ -128,7 +127,7 @@ const ListSheet = () => {
                     <hr size="4" color="grey" />
                 </>
 
-                <div className="ag-theme-alpine" style={{ height: 600 }}>
+                <div className="ag-theme-material" style={{ height: 600 }}>
                     <AgGridReact
                         ref={gridRef}
                         popupParent={document.body}
