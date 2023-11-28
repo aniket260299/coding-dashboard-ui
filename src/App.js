@@ -1,46 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom'
-import Header from './components/Header';
-import ListDashboard from './components/ListDashboard';
-import EditDashboard from './components/EditDashboard';
-import ViewDashboard from './components/ViewDashboard';
-import Auth from './components/Auth';
-import './App.css'
-import Utils from './components/Utils';
-import ListSheet from './components/sheet/ListSheet';
+import { Route, Routes, useNavigate } from 'react-router-dom'
+import Header from './Component/Header';
+import ListSheet from './Component/sheet/ListSheet';
+import ListTopic from './Component/topic/ListTopic';
+import ListProblem from './Component/problem/ListProblem';
+import OpenProblem from './Component/problem/OpenDashboard';
+import EditProblem from './Component/problem/EditProblem';
+import Auth from './Component/auth/Auth';
+import { authenticated, isAlive } from './Component/common/Utils';
+import './App.css';
 
+const App = () => {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
-function App() {
-  const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        setLoading(true);
+        isAlive().then(response => {
+            if (response?.data && authenticated()) {
+                sessionStorage.clear();
+                setLoading(false);
+            } else {
+                navigate('/auth');
+                setLoading(false);
+            }
+        }).catch(err => {
+            console.log("error in isAlive: " + err);
+            setLoading(false);
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    Utils.fetchDashboardList().then(() => {
-      setLoading(false);
-    })
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="loading-spinner"></div>
+    return (loading ? <div className="loading-spinner"></div> : <>
+        <Header />
+        <div style={{ padding: '20px 30px' }}>
+            <Routes>
+                <Route path="/" element={<ListSheet />} />
+                <Route path="/topic/:sheetId/:sheet" element={<ListTopic />} />
+                <Route path="/problem/:sheetId/:topicId/:sheet/:topic" element={<ListProblem />} />
+                <Route path="/problem/open/:sheetId/:topicId/:problemId/:sheet/:topic" element={<OpenProblem />} />
+                <Route path="/problem/edit/:sheetId/:topicId/:problemId/:sheet/:topic" element={<EditProblem />} />
+                <Route path='/auth' element={<Auth />} />
+            </Routes>
+        </div>
+    </>
     );
-  }
-
-  return (
-    <div>
-      <Header />
-      <div style={{ padding: '20px 30px' }}>
-        <Routes>
-          <Route path="/" element={<ListDashboard />} />
-          <Route path="/sheets" element={<ListSheet />} />
-          <Route path="/dashboards" element={<ListDashboard />} />
-          <Route path="/dashboard/edit/:index" element={<EditDashboard />} />
-          <Route path="/dashboard/view/:index" element={<ViewDashboard />} />
-          <Route path='/auth' element={<Auth />} />
-        </Routes>
-      </div>
-    </div>
-  );
 }
 
 export default App;

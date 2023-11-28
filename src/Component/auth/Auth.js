@@ -1,36 +1,32 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Form, FormGroup, Input, Label } from 'reactstrap';
-import AuthService from "../service/AuthService";
-import Utils from "./Utils";
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { signIn, signUp } from "./AuthService";
 
 const Auth = () => {
     const [authMode, setAuthMode] = useState("signin");
     const [loading, setLoading] = useState(false);
-
-    const changeAuthMode = () => {
-        setAuthMode(authMode === "signin" ? "signup" : "signin");
-    };
-
-    const isSignIn = authMode === "signin";
-
+    const location = useLocation();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
         password: '',
         rePassword: ''
     });
 
+    const from = location.state?.from?.pathname || "/";
+
+    const changeAuthMode = () => {
+        setAuthMode(authMode === "signin" ? "signup" : "signin");
+    };
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/dashboards";
-    const navigate = useNavigate();
-
     const validateForm = () => {
-        if (isSignIn || formData.password === formData.rePassword) {
+        if (authMode === 'signin' || formData.password === formData.rePassword) {
             return true;
         }
         else {
@@ -44,7 +40,7 @@ const Auth = () => {
         }
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         if (validateForm()) {
             const authData = {
@@ -53,52 +49,39 @@ const Auth = () => {
             };
 
             setLoading(true);
-            const isAlive = await Utils.isAlive();
-            let response;
-            if (isAlive) {
-                try {
-                    response = isSignIn ? await AuthService.signIn(authData) : await AuthService.signUp(authData);
-                } catch {
-                    console.log("error while sign/sign-up");
-                    setLoading(false);
-                }
-            }
-
-            if (response?.data?.length > 0) {
-                if (isSignIn) {
+            if (authMode === 'signin') {
+                signIn(authData).then(response => {
                     localStorage.setItem("jwt-token", response.data);
                     localStorage.setItem("username", formData.username);
-
                     const now = new Date();
                     localStorage.setItem("jwt-token-expiry", now.setHours(now.getHours() + 23));
-
-                    await Utils.fetchDashboardList();
                     setLoading(false);
                     navigate(from);
-                } else {
+                }).catch(err => {
+                    console.log("error while sigin: " + err);
+                    setLoading(false);
+                });
+            } else {
+                signUp(authData).then(() => {
                     setLoading(false);
                     changeAuthMode();
-                }
+                }).catch(err => {
+                    console.log("error while sigin-up: " + err);
+                    setLoading(false);
+                });
             }
-            setLoading(false);
         }
     }
 
-    if (loading) {
-        return (
-            <div className="loading-spinner"></div>
-        );
-    }
-
-    return (
+    return (loading ? <div className="loading-spinner"></div> :
         <div className="Auth-form-container">
             <Form className="Auth-form" onSubmit={handleSubmit}>
                 <div className="Auth-form-content">
-                    <h3 className="Auth-form-title">{isSignIn ? "Sign In" : "Sign Up"}</h3>
+                    <h3 className="Auth-form-title">{authMode === 'signin' ? "Sign In" : "Sign Up"}</h3>
                     <div className="text-center">
-                        {isSignIn ? "Not registered yet?" : "Already registered?"}{" "}
+                        {authMode === 'signin' ? "Not registered yet?" : "Already registered?"}{" "}
                         <span className="link-primary" onClick={changeAuthMode}>
-                            {isSignIn ? "Sign Up" : "Sign In"}
+                            {authMode === 'signin' ? "Sign Up" : "Sign In"}
                         </span>
                     </div>
                     <FormGroup>
@@ -113,7 +96,7 @@ const Auth = () => {
                             onChange={handleChange} autoComplete="password" />
                     </FormGroup>
 
-                    {!isSignIn &&
+                    {authMode === 'signup' &&
                         <FormGroup>
                             <Label for="rePassword">Confirm Password</Label>
                             <Input className="form-control mt-1" type="password" name="rePassword" id="rePassword" value={formData.rePassword}
@@ -122,7 +105,7 @@ const Auth = () => {
                     }
 
                     <FormGroup className="d-grid gap-2 mt-3">
-                        <button style={{ color: "black" }} type="submit">{isSignIn ? "[ Sign In ]" : "[ Sign Up ]"}</button>
+                        <Button type="submit">{authMode === 'signin' ? "Sign In" : "Sign Up"}</Button>
                     </FormGroup>
                 </div>
             </Form>

@@ -1,32 +1,24 @@
 @keyframes spinner {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-spinner {
-    width: 100px;
-    height: 100px;
-    border: 20px solid #f3f3f3;
-    border-top: 20px solid #383636;
-    border-radius: 50%;
-    animation: spinner 1.5s linear infinite;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    position: fixed;
-}
-
-button {
-    background: none !important;
-    padding: none !important;
-    border: none;
-    text-decoration: none;
-    cursor: pointer;
+  width: 100px;
+  height: 100px;
+  border: 20px solid #f3f3f3;
+  border-top: 20px solid #383636;
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: fixed;
 }
