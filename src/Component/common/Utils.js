@@ -41,3 +41,12 @@ export function getNextPosition(list) {
     }
     return next + 1;
 };
+
+export function encodeEscapeCharaters(str) {
+    return str.replaceAll('/', '~bslash~');
+};
+
+export function decodeEscapeCharaters(str) {
+    return str.replaceAll('~bslash~', '/');
+};
+

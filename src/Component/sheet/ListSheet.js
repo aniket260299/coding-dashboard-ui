@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import { getSheetsByUserName, deleteSheet, updateSheet, addSheet, importData, exportData } from "./SheetService";
 import { AgGridReact } from "ag-grid-react";
-import { authenticated, findIndexFromId } from "../common/Utils";
+import { authenticated, findIndexFromId, encodeEscapeCharaters } from "../common/Utils";
 import { setSessionStorage, getSessionStorage, updateSessionStorage } from "../common/DataCacheUtil";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -177,7 +177,7 @@ const ListSheet = () => {
     };
 
     const Action = (param) => {
-        const openURL = param?.data?.id ? "/topic/" + param.data.id + "/" + param.data.sheet : "/";
+        const openURL = param?.data?.id ? "/topic/" + param.data.id + "/" + encodeEscapeCharaters(param.data.sheet) : "/";
         return <>
             <Link to={openURL} style={{ textDecoration: 'none', color: 'green' }}> Open </Link>
             <Link onClick={() => startEditButton(param)} style={{ textDecoration: 'none', color: 'blue', padding: '10%' }}> Edit </Link>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getProblemsByTopicId, deleteProblem } from "./ProblemService"
 import { AgGridReact } from "ag-grid-react";
-import { authenticated, getNextPosition } from "../common/Utils";
+import { authenticated, decodeEscapeCharaters, getNextPosition } from "../common/Utils";
 import { setSessionStorage, getSessionStorage, updateSessionStorage } from "../common/DataCacheUtil";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -119,7 +119,7 @@ const ListProblem = () => {
                     <Link to={"/problem/edit/" + sheetId + "/" + topicId + "/" + (0 - getNextPosition(rowData)) + "/" + sheet + "/" + topic} className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Add Record</Link>
                     <Link to={"/topic/" + sheetId + "/" + sheet} className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Topics</Link>
                     <Link to="/" className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Sheets</Link>
-                    <strong>{sheet + " / " + topic}</strong>
+                    <strong>{decodeEscapeCharaters(sheet) + " / " + decodeEscapeCharaters(topic)}</strong>
                     <hr size="4" color="grey" />
                 </>
 

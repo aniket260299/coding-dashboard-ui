@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getTopicsBySheetId, deleteTopic, updateTopic, addTopic } from "./TopicService"
 import { AgGridReact } from "ag-grid-react";
-import { authenticated, findIndexFromId } from "../common/Utils";
+import { authenticated, decodeEscapeCharaters, encodeEscapeCharaters, findIndexFromId } from "../common/Utils";
 import { setSessionStorage, getSessionStorage, updateSessionStorage } from "../common/DataCacheUtil";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -128,7 +128,7 @@ const ListTopic = () => {
     };
 
     const Action = (param) => {
-        const openURL = param?.data?.id ? "/problem/" + sheetId + "/" + param.data.id + "/" + sheet + "/" + param.data.topic : "/";
+        const openURL = param?.data?.id ? "/problem/" + sheetId + "/" + param.data.id + "/" + sheet + "/" + encodeEscapeCharaters(param.data.topic) : "/";
         return <>
             <Link to={openURL} style={{ textDecoration: 'none', color: 'green' }}> Open </Link>
             <Link onClick={() => startEditButton(param)} style={{ textDecoration: 'none', color: 'blue', padding: '10%' }}> Edit </Link>
@@ -162,7 +162,7 @@ const ListTopic = () => {
                     <Link to="/" className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Sheets</Link>
                     {editing &&
                         <Link onClick={stopEdititng} className="float-end" style={{ textDecoration: 'none', color: 'blue' }}>Stop Editing</Link>}
-                    <strong>{sheet}</strong>
+                    <strong>{decodeEscapeCharaters(sheet)}</strong>
                     <hr size="4" color="grey" />
                 </>
 
