@@ -159,10 +159,10 @@ const ListTopic = () => {
             <>
                 <>
                     <Link onClick={addDummyRecord} className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Add Record</Link>
-                    <Link to="/" className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Sheets</Link>
                     {editing &&
                         <Link onClick={stopEdititng} className="float-end" style={{ textDecoration: 'none', color: 'blue' }}>Stop Editing</Link>}
-                    <strong>{decodeEscapeCharaters(sheet)}</strong>
+                    <Link to="/" style={{ textDecoration: 'none', color: 'blue' }}><strong>Sheets</strong></Link>
+                    <strong>{" / " + decodeEscapeCharaters(sheet)}</strong>
                     <hr size="4" color="grey" />
                 </>
 

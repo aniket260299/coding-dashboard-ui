@@ -117,9 +117,10 @@ const ListProblem = () => {
             <>
                 <>
                     <Link to={"/problem/edit/" + sheetId + "/" + topicId + "/" + (0 - getNextPosition(rowData)) + "/" + sheet + "/" + topic} className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Add Record</Link>
-                    <Link to={"/topic/" + sheetId + "/" + sheet} className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Topics</Link>
-                    <Link to="/" className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Sheets</Link>
-                    <strong>{decodeEscapeCharaters(sheet) + " / " + decodeEscapeCharaters(topic)}</strong>
+
+                    <Link to="/" style={{ textDecoration: 'none', color: 'blue' }}><strong>Sheets</strong></Link>
+                    <Link to={"/topic/" + sheetId + "/" + sheet} style={{ textDecoration: 'none', color: 'blue' }}><strong>{" / " + decodeEscapeCharaters(sheet)}</strong></Link>
+                    <strong>{" / " + decodeEscapeCharaters(topic)}</strong>
                     <hr size="4" color="grey" />
                 </>
 

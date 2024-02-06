@@ -4,7 +4,7 @@ import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/theme-chrome';
 import { Table } from 'reactstrap';
-import { authenticated } from '../common/Utils';
+import { authenticated, decodeEscapeCharaters } from '../common/Utils';
 import { getProblemById } from './ProblemService';
 import { getSessionStorage } from '../common/DataCacheUtil';
 
@@ -46,10 +46,10 @@ function OpenProblem() {
     return (loading ? <div className="loading-spinner"></div> :
         <>
             {data && <>
-                <Link to={"/problem/" + sheetId + "/" + topicId + "/" + sheet + "/" + topic} className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Problems</Link>
-                <Link to={"/topic/" + sheetId + "/" + sheet} className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Topics</Link>
-                <Link to="/" className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Sheets</Link>
-                <strong style={{ color: getColorByDifficulty() }}>{data.title || (data.title.length === 0 && 'null')}</strong>
+                <Link to="/" style={{ textDecoration: 'none', color: 'blue' }}><strong>Sheets</strong></Link>
+                <Link to={"/topic/" + sheetId + "/" + sheet} style={{ textDecoration: 'none', color: 'blue' }}><strong>{" / " + decodeEscapeCharaters(sheet)}</strong></Link>
+                <Link to={"/problem/" + sheetId + "/" + topicId + "/" + sheet + "/" + topic} style={{ textDecoration: 'none', color: 'blue' }}><strong>{" / " + decodeEscapeCharaters(topic)}</strong></Link> /
+                <strong style={{ color: getColorByDifficulty() }}>{(" " + data.title) || (data.title.length === 0 && ' null')}</strong>
                 <hr size="4" color="grey" />
                 <div style={{ width: '50%', float: 'right' }}>
                     <AceEditor

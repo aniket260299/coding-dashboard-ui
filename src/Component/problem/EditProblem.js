@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
-import { getRevisionNotes, authenticated } from '../common/Utils';
+import { getRevisionNotes, authenticated, decodeEscapeCharaters } from '../common/Utils';
 import { getProblemById, addProblem, updateProblem } from './ProblemService';
 import { getSessionStorage, updateSessionStorage } from '../common/DataCacheUtil';
 import AceEditor from 'react-ace';
@@ -97,18 +97,16 @@ const EditProblem = () => {
         }
     }
 
-    const title = <strong>{problemId === '-1' ? 'Add Problem' : 'Edit Problem'}</strong>;
-
     return (loading ? <div className="loading-spinner"></div> : form &&
         <div>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Button className="float-end" type="submit">Save</Button>
                 </FormGroup>
-                <Link to={"/problem/" + sheetId + "/" + topicId + "/" + sheet + "/" + topic} className="float-end" style={{ textDecoration: 'none', color: 'black', paddingRight: '10px', paddingLeft: '10px' }}>Problems</Link>
-                <Link to={"/topic/" + sheetId + "/" + sheet} className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Topics</Link>
-                <Link to="/" className="float-end" style={{ textDecoration: 'none', color: 'black', paddingLeft: '10px' }}>Sheets</Link>
-                {title}
+                <Link to="/" style={{ textDecoration: 'none', color: 'blue' }}><strong>Sheets</strong></Link>
+                <Link to={"/topic/" + sheetId + "/" + sheet} style={{ textDecoration: 'none', color: 'blue' }}><strong>{" / " + decodeEscapeCharaters(sheet)}</strong></Link>
+                <Link to={"/problem/" + sheetId + "/" + topicId + "/" + sheet + "/" + topic} style={{ textDecoration: 'none', color: 'blue' }}><strong>{" / " + decodeEscapeCharaters(topic)}</strong></Link> /
+                <strong>{problemId > 0 ? ' Edit Problem' : ' Add Problem'}</strong>
                 <hr size="4" color="grey" />
                 <div style={{ width: '50%', float: 'right' }}>
                     <FormGroup>
